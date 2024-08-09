@@ -1,18 +1,24 @@
-// app/events/add-event/page.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
 
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+
 export default function AddEventPage() {
   const router = useRouter();
+
   const [eventData, setEventData] = useState({
     event: '',
     PIC: '',
-    startDate: '',
-    endDate: '',
-    dDay: '',
-    loc: ''
+    regisStart: '',
+    regisEnd: '',
+    eventStart: '',
+    eventEnd: '',
+    loc: '',
+    lat: -6.257377,
+    lng: 106.835903,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,6 +31,7 @@ export default function AddEventPage() {
     // Handle form submission
     router.push('/events'); // back to the list event page
   };
+
 
   return (
     <div className="flex flex-col bg-gray-100 p-4 min-h-screen items-center">
@@ -63,40 +70,65 @@ export default function AddEventPage() {
             value={eventData.loc}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            required
-          />
+            required />
+        </div>
+
+        <div className="mb-4">
+          <MapContainer center={[eventData.lat, eventData.lng]} zoom={13} scrollWheelZoom={false} style={{ height: '200px', width: '100%' }}>
+        <TileLayer
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <Marker position={[eventData.lat, eventData.lng]}>
+          <Popup>
+            A pretty CSS3 popup. <br /> Easily customizable.
+          </Popup>
+        </Marker>
+      </MapContainer>
         </div>
         <div className="mb-4">
-          <label htmlFor="startDate" className="block text-sm font-medium text-gray-700">Start Date</label>
+          <label htmlFor="regisStart" className="block text-sm font-medium text-gray-700">Registration Start Date</label>
           <input
             type="date"
-            id="startDate"
-            name="startDate"
-            value={eventData.startDate}
+            id="regisStart"
+            name="regisStart"
+            value={eventData.regisStart}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="endDate" className="block text-sm font-medium text-gray-700">End Date</label>
+          <label htmlFor="regisEnd" className="block text-sm font-medium text-gray-700">Registration End Date</label>
           <input
             type="date"
-            id="endDate"
-            name="endDate"
-            value={eventData.endDate}
+            id="regisEnd"
+            name="regisEnd"
+            value={eventData.regisEnd}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="dDay" className="block text-sm font-medium text-gray-700">D-day</label>
+          <label htmlFor="eventStart" className="block text-sm font-medium text-gray-700">Event Start Date</label>
           <input
             type="date"
-            id="dDay"
-            name="dDay"
-            value={eventData.dDay}
+            id="eventStart"
+            name="eventStart"
+            value={eventData.eventStart}
+            onChange={handleChange}
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="eventEnd" className="block text-sm font-medium text-gray-700">Event End Date</label>
+          <input
+            type="date"
+            id="eventEnd"
+            name="eventEnd"
+            value={eventData.eventEnd}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required

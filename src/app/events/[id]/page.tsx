@@ -71,9 +71,11 @@ const userData = [
     evidence: "pic",
   },
 ]
+
+
 export default function detailEvent() {
 
     return (
-      
+      <h1> hehehehehe </h1>
     )
 }

@@ -7,6 +7,9 @@ import { useRouter } from 'next/navigation'
 import { CgMathPlus, CgEye, CgPen, CgTrash} from "react-icons/cg";
 import Link from "next/link";
 
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+
 
 const userData = [
   {
@@ -16,6 +19,8 @@ const userData = [
     endDate: "13 July 2024",
     dDay: "14 July 2024",
     loc: "Kalibata",
+    lat: -6.257377,
+    lng: 106.835903,
   },
   {
     eventName: "Senam",
@@ -92,7 +97,7 @@ const userData = [
 
 ];
 
-export default function listEvent() {
+export default function eventDetail() {
   const router = useRouter();
 
   const handleCreateEventClick = () => {
@@ -105,7 +110,7 @@ export default function listEvent() {
 
   return (
     <div className="flex flex-col bg-gray-100 p-4 min-h-screen items-center">
-      <h1 className="text-2xl font-semibold mb-2">Events</h1>
+      <h1 className="text-2xl mb-5font-semibold mb-2">Events</h1>
 
       <div className="flex w-full justify-start mb-2">
         <button 
@@ -179,7 +184,7 @@ export default function listEvent() {
                   </div>
                 </td>
                 <td className="px-6 py-4 flex whitespace-nowrap">
-                  <Link href={`/events/detail/${value.eventName}`}legacyBehavior>
+                  <Link href={`/events/${value.eventName}`}legacyBehavior>
                     <a>
                       <button className="px-2 py-1 bg-[#027FB9] rounded-md text-xs text-white flex items-center hover:bg-[#036999]">
                       <CgEye className="h-3 w-3"/> {/*view detail*/}
@@ -187,10 +192,13 @@ export default function listEvent() {
                     </a>
                   </Link>
                   
-                  <button className="px-2 py-1 ml-1 bg-[#027FB9] rounded-md text-xs text-white flex items-center hover:bg-[#036999]"
-                  onClick={handleEditEventClick}>
-                  <CgPen className="h-3 w-3"/>{/*edit*/}
-                  </button> 
+                  <Link href={`/events/detail/${value.eventName}`}legacyBehavior>
+                    <a>
+                      <button className="px-2 py-1 ml-1 bg-[#027FB9] rounded-md text-xs text-white flex items-center hover:bg-[#036999]">
+                      <CgPen className="h-3 w-3"/>{/*edit*/}
+                      </button> 
+                    </a>
+                  </Link>
 
                   <button className="px-2 py-1 ml-1 bg-[#FF7F3E] rounded-md text-xs text-white flex items-center hover:bg-[#FF6619]">
                   <CgTrash className="w-3 h-3"/> {/*delete*/}
