@@ -7,22 +7,19 @@ import { useRouter } from 'next/navigation'
 import { CgMathPlus, CgEye, CgPen, CgTrash} from "react-icons/cg";
 import Link from "next/link";
 
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-
 
 const userData = [
   {
+    id: "1",
     eventName: "Badminton",
     PIC: "Fikri Ahsanandi",
     startDate: "10 July 2024",
     endDate: "13 July 2024",
     dDay: "14 July 2024",
     loc: "Kalibata",
-    lat: -6.257377,
-    lng: 106.835903,
   },
   {
+    id: "2",
     eventName: "Senam",
     PIC: "Ivan Fabriano",
     startDate: "5 August 2024",
@@ -31,6 +28,7 @@ const userData = [
     loc: "Parkiran",
   },
   {
+    id: "3",
     eventName: "Ping Pong",
     PIC: "Mba Dillah",
     startDate: "5 August 2024",
@@ -39,6 +37,7 @@ const userData = [
     loc: "Lobby",
   },
   {
+    id: "4",
     eventName: "Sepeda",
     PIC: "Mas Iqbal",
     startDate: "5 August 2024",
@@ -47,6 +46,7 @@ const userData = [
     loc: "Bintaro",
   },
   {
+    id: "5",
     eventName: "Sepeda",
     PIC: "Mas Iqbal",
     startDate: "5 August 2024",
@@ -55,6 +55,7 @@ const userData = [
     loc: "Bintaro",
   },
   {
+    id: "6",
     eventName: "Sepeda",
     PIC: "Mas Iqbal",
     startDate: "5 August 2024",
@@ -63,6 +64,7 @@ const userData = [
     loc: "Bintaro",
   },
   {
+    id: "7",
     eventName: "Sepeda",
     PIC: "Mas Iqbal",
     startDate: "5 August 2024",
@@ -71,6 +73,7 @@ const userData = [
     loc: "Bintaro",
   },
   {
+    id: "8",
     eventName: "Sepeda",
     PIC: "Mas Iqbal",
     startDate: "5 August 2024",
@@ -79,6 +82,7 @@ const userData = [
     loc: "Bintaro",
   },
   {
+    id: "9",
     eventName: "Sepeda",
     PIC: "Mas Iqbal",
     startDate: "5 August 2024",
@@ -87,6 +91,7 @@ const userData = [
     loc: "Bintaro",
   },
   {
+    id: "10",
     eventName: "Sepeda",
     PIC: "Mas Iqbal",
     startDate: "5 August 2024",
@@ -97,7 +102,7 @@ const userData = [
 
 ];
 
-export default function eventDetail() {
+export default function listEvent() {
   const router = useRouter();
 
   const handleCreateEventClick = () => {
@@ -110,7 +115,7 @@ export default function eventDetail() {
 
   return (
     <div className="flex flex-col bg-gray-100 p-4 min-h-screen items-center">
-      <h1 className="text-2xl mb-5font-semibold mb-2">Events</h1>
+      <h1 className="text-2xl font-semibold mb-2">Events</h1>
 
       <div className="flex w-full justify-start mb-2">
         <button 

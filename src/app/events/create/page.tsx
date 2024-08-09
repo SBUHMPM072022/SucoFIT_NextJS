@@ -2,18 +2,19 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
-
-import { MapContainer, TileLayer, Marker, Popup, CircleMarker, ic } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
+import L from 'leaflet';
 
 export default function AddEventPage() {
   const router = useRouter();
-  const [position, setPosition]: any = useState(null);
+  const [position, setPosition] = useState<[number, number]>([-6.257377, 106.835903]);
 
   const [eventData, setEventData] = useState({
     event: '',
+    eventType: '', // Added state for event type
     PIC: '',
     regisStart: '',
     regisEnd: '',
@@ -24,6 +25,14 @@ export default function AddEventPage() {
     lng: 106.835903,
   });
 
+  // List of event types for dropdown
+  const eventTypes = [
+    "Badminton",
+    "Senam",
+    "Ping Pong",
+    "Sepeda"
+  ];
+
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -33,15 +42,12 @@ export default function AddEventPage() {
         },
         (err) => {
           console.error(err);
-          setPosition([-6.200000, 106.816666]); 
         }
       );
-    } else {
-      setPosition([-6.200000, 106.816666]);
     }
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setEventData({ ...eventData, [name]: value });
   };
@@ -51,17 +57,16 @@ export default function AddEventPage() {
     router.push('/events'); 
   };
 
-  const handleDragEnd = (event: any) => {
-    const marker = event.target;
+  const handleDragEnd = (event: L.LeafletEvent) => {
+    const marker = event.target as L.Marker;
     const newPosition = marker.getLatLng();
-    alert([newPosition.lat, newPosition.lng]);
+    alert(`Latitude: ${newPosition.lat}, Longitude: ${newPosition.lng}`);
     setPosition([newPosition.lat, newPosition.lng]);
   };
 
-
   return (
     <div className="flex flex-col bg-gray-100 p-4 min-h-screen items-center">
-      <h1 className="text-2xl font-semibold mb-2">CREATE NEW EVENT</h1>
+      <h1 className="text-2xl font-semibold mb-2">Create New Event</h1>
       <form onSubmit={handleSubmit} className="w-full max-w-md bg-white p-6 border rounded-lg shadow-md">
         <div className="mb-4">
           <label htmlFor="event" className="block text-sm font-medium text-gray-700">Event Name</label>
@@ -76,6 +81,22 @@ export default function AddEventPage() {
           />
         </div>
         <div className="mb-4">
+          <label htmlFor="eventType" className="block text-sm font-medium text-gray-700">Event Type</label>
+          <select
+            id="eventType"
+            name="eventType"
+            value={eventData.eventType}
+            onChange={handleChange}
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            required
+          >
+            <option value="">Select the event type</option>
+            {eventTypes.map(type => (
+              <option key={type} value={type}>{type}</option>
+            ))}
+          </select>
+        </div>
+        <div className="mb-4">
           <label htmlFor="PIC" className="block text-sm font-medium text-gray-700">PIC</label>
           <input
             type="text"
@@ -88,29 +109,30 @@ export default function AddEventPage() {
           />
         </div>
         <div className="mb-4">
-        <div style={{ height: '100vh', width: '100%' }}>
-      {position ? (
-        <MapContainer center={position} zoom={13} scrollWheelZoom={true} style={{ height: '100%', width: '100%' }}>
-          <TileLayer
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          <Marker 
-            position={position}
-            draggable={true} // Mengaktifkan fitur draggable pada marker
-            eventHandlers={{
-              dragend: handleDragEnd, // Menangani event dragend untuk memperbarui posisi
-            }}
-          >
-            <Popup>
-              You are here! <br /> Latitude: {position[0]}, Longitude: {position[1]}
-            </Popup>
-          </Marker>
-        </MapContainer>
-      ) : (
-        <p>Loading your location...</p>
-      )}
-    </div>
+          <label htmlFor="loc" className="block text-sm font-medium text-gray-700">Location</label>
+          <div className="w-full" style={{ height: '40vh' }}>
+            {position ? (
+              <MapContainer center={position} zoom={13} scrollWheelZoom={true} style={{ height: '100%', width: '100%' }}>
+                <TileLayer
+                  attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                <Marker 
+                  position={position}
+                  draggable={true}
+                  eventHandlers={{
+                    dragend: handleDragEnd,
+                  }}
+                >
+                  <Popup>
+                    You are here! <br /> Latitude: {position[0]}, Longitude: {position[1]}
+                  </Popup>
+                </Marker>
+              </MapContainer>
+            ) : (
+              <p>Loading your location...</p>
+            )}
+          </div>
         </div>
         <div className="mb-4">
           <label htmlFor="regisStart" className="block text-sm font-medium text-gray-700">Registration Start Date</label>
