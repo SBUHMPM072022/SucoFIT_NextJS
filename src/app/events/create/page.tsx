@@ -14,7 +14,7 @@ export default function AddEventPage() {
 
   const [eventData, setEventData] = useState({
     event: '',
-    eventType: '', // Added state for event type
+    eventType: '',
     PIC: '',
     regisStart: '',
     regisEnd: '',
@@ -25,7 +25,7 @@ export default function AddEventPage() {
     lng: 106.835903,
   });
 
-  // List of event types for dropdown
+  // List of eventTypes
   const eventTypes = [
     "Badminton",
     "Senam",
@@ -66,7 +66,7 @@ export default function AddEventPage() {
 
   return (
     <div className="flex flex-col bg-gray-100 p-4 min-h-screen items-center">
-      <h1 className="text-2xl font-semibold mb-2">Create New Event</h1>
+      <h1 className="text-2xl font-semibold mb-2">CREATE NEW EVENT</h1>
       <form onSubmit={handleSubmit} className="w-full max-w-md bg-white p-6 border rounded-lg shadow-md">
         <div className="mb-4">
           <label htmlFor="event" className="block text-sm font-medium text-gray-700">Event Name</label>
@@ -90,7 +90,7 @@ export default function AddEventPage() {
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required
           >
-            <option value="">Select the event type</option>
+            <option value="">Select event type</option>
             {eventTypes.map(type => (
               <option key={type} value={type}>{type}</option>
             ))}

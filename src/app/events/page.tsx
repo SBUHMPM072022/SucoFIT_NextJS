@@ -1,4 +1,3 @@
-// pages/index.tsx
 "use client";
 
 import { useState } from "react";
@@ -6,6 +5,7 @@ import { useRouter } from 'next/navigation'
 
 import { CgMathPlus, CgEye, CgPen, CgTrash} from "react-icons/cg";
 import Link from "next/link";
+import { FC } from 'react';
 
 
 const userData = [
@@ -13,90 +13,100 @@ const userData = [
     id: "1",
     eventName: "Badminton",
     PIC: "Fikri Ahsanandi",
-    startDate: "10 July 2024",
-    endDate: "13 July 2024",
-    dDay: "14 July 2024",
+    regisStart: "10 July 2024",
+    regisEnd: "13 July 2024",
+    eventStart: "14 July 2024",
+    eventEnd: "14 July 2024",
     loc: "Kalibata",
   },
   {
     id: "2",
     eventName: "Senam",
     PIC: "Ivan Fabriano",
-    startDate: "5 August 2024",
-    endDate: "9 August 2024",
-    dDay: "10 August 2024",
+    regisStart: "5 August 2024",
+    regisEnd: "13 July 2024",
+    eventStart: "10 August 2024",
+    eventEnd: "10 August 2024",
     loc: "Parkiran",
   },
   {
     id: "3",
     eventName: "Ping Pong",
     PIC: "Mba Dillah",
-    startDate: "5 August 2024",
-    endDate: "9 August 2024",
-    dDay: "10 August 2024",
+    regisStart: "5 August 2024",
+    regisEnd: "13 July 2024",
+    eventStart: "10 August 2024",
+    eventEnd: "10 August 2024",
     loc: "Lobby",
   },
   {
     id: "4",
     eventName: "Sepeda",
     PIC: "Mas Iqbal",
-    startDate: "5 August 2024",
-    endDate: "9 August 2024",
-    dDay: "10 August 2024",
+    regisStart: "5 August 2024",
+    regisEnd: "13 July 2024",
+    eventStart: "10 August 2024",
+    eventEnd: "10 August 2024",
     loc: "Bintaro",
   },
   {
     id: "5",
     eventName: "Sepeda",
     PIC: "Mas Iqbal",
-    startDate: "5 August 2024",
-    endDate: "9 August 2024",
-    dDay: "10 August 2024",
+    regisStart: "5 August 2024",
+    regisEnd: "13 July 2024",
+    eventStart: "10 August 2024",
+    eventEnd: "10 August 2024",
     loc: "Bintaro",
   },
   {
     id: "6",
     eventName: "Sepeda",
     PIC: "Mas Iqbal",
-    startDate: "5 August 2024",
-    endDate: "9 August 2024",
-    dDay: "10 August 2024",
+    regisStart: "5 August 2024",
+    regisEnd: "13 July 2024",
+    eventStart: "10 August 2024",
+    eventEnd: "10 August 2024",
     loc: "Bintaro",
   },
   {
     id: "7",
     eventName: "Sepeda",
     PIC: "Mas Iqbal",
-    startDate: "5 August 2024",
-    endDate: "9 August 2024",
-    dDay: "10 August 2024",
+    regisStart: "5 August 2024",
+    regisEnd: "13 July 2024",
+    eventStart: "10 August 2024",
+    eventEnd: "10 August 2024",
     loc: "Bintaro",
   },
   {
     id: "8",
     eventName: "Sepeda",
     PIC: "Mas Iqbal",
-    startDate: "5 August 2024",
-    endDate: "9 August 2024",
-    dDay: "10 August 2024",
+    regisStart: "5 August 2024",
+    regisEnd: "13 July 2024",
+    eventStart: "10 August 2024",
+    eventEnd: "10 August 2024",
     loc: "Bintaro",
   },
   {
     id: "9",
     eventName: "Sepeda",
     PIC: "Mas Iqbal",
-    startDate: "5 August 2024",
-    endDate: "9 August 2024",
-    dDay: "10 August 2024",
+    regisStart: "5 August 2024",
+    regisEnd: "13 July 2024",
+    eventStart: "10 August 2024",
+    eventEnd: "10 August 2024",
     loc: "Bintaro",
   },
   {
     id: "10",
     eventName: "Sepeda",
     PIC: "Mas Iqbal",
-    startDate: "5 August 2024",
-    endDate: "9 August 2024",
-    dDay: "10 August 2024",
+    regisStart: "5 August 2024",
+    regisEnd: "13 July 2024",
+    eventStart: "10 August 2024",
+    eventEnd: "10 August 2024",
     loc: "Bintaro",
   },
 
@@ -106,16 +116,16 @@ export default function listEvent() {
   const router = useRouter();
 
   const handleCreateEventClick = () => {
-    router.push('/events/create'); // Navigate to the create new event page
+    router.push('/events/create'); // create new event page
   };
 
   const handleEditEventClick = () => {
-    router.push('/events/edit'); // Navigate to the edit event page
+    router.push('/events/edit'); // edit event page
   };
 
   return (
     <div className="flex flex-col bg-gray-100 p-4 min-h-screen items-center">
-      <h1 className="text-2xl font-semibold mb-2">Events</h1>
+      <h1 className="text-2xl font-semibold mb-2">EVENTS</h1>
 
       <div className="flex w-full justify-start mb-2">
         <button 
@@ -143,13 +153,10 @@ export default function listEvent() {
                 Location
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Start Date
+                Registration Date
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                End Date
-              </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                D-day
+                Event Date
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Actions
@@ -178,26 +185,23 @@ export default function listEvent() {
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">{value.startDate}</div>
+                  <div className="text-sm text-gray-900">{value.regisStart} - {value.regisEnd}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">{value.endDate}</div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium text-gray-900">
-                    {value.dDay}
-                  </div>
+                  <div className="text-sm text-gray-900">{value.eventStart} - {value.eventEnd}</div>
                 </td>
                 <td className="px-6 py-4 flex whitespace-nowrap">
-                  <Link href={`/events/${value.eventName}`}legacyBehavior>
+                  <div key={value.id}>
+                  <Link href={`/events/${value.id}`}legacyBehavior>
                     <a>
                       <button className="px-2 py-1 bg-[#027FB9] rounded-md text-xs text-white flex items-center hover:bg-[#036999]">
                       <CgEye className="h-3 w-3"/> {/*view detail*/}
                       </button> 
                     </a>
                   </Link>
+                  </div>
                   
-                  <Link href={`/events/detail/${value.eventName}`}legacyBehavior>
+                  <Link href={`/events/edit/${value.id}`}legacyBehavior>
                     <a>
                       <button className="px-2 py-1 ml-1 bg-[#027FB9] rounded-md text-xs text-white flex items-center hover:bg-[#036999]">
                       <CgPen className="h-3 w-3"/>{/*edit*/}
