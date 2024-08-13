@@ -14,6 +14,7 @@ export default function AddEventPage() {
 
   const [eventData, setEventData] = useState({
     event: '',
+    desc:'',
     eventType: '',
     PIC: '',
     regisStart: '',
@@ -28,9 +29,14 @@ export default function AddEventPage() {
   // List of eventTypes
   const eventTypes = [
     "Badminton",
+    "Basket",
+    "Berenang",
+    "Lari",
     "Senam",
+    "Sepeda",
     "Ping Pong",
-    "Sepeda"
+    "Tenis",
+    "Voli"
   ];
 
   useEffect(() => {
@@ -66,8 +72,8 @@ export default function AddEventPage() {
 
   return (
     <div className="flex flex-col bg-gray-100 p-4 min-h-screen items-center">
-      <h1 className="text-2xl font-semibold mb-2">CREATE NEW EVENT</h1>
-      <form onSubmit={handleSubmit} className="w-full max-w-md bg-white p-6 border rounded-lg shadow-md">
+      <h1 className="font-bold p-10 uppercase">Create New Event</h1>
+      <form onSubmit={handleSubmit} className="w-full max-w-md p-6 rounded-lg">
         <div className="mb-4">
           <label htmlFor="event" className="block text-sm font-medium text-gray-700">Event Name</label>
           <input
@@ -75,6 +81,18 @@ export default function AddEventPage() {
             id="event"
             name="event"
             value={eventData.event}
+            onChange={handleChange}
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="desc" className="block text-sm font-medium text-gray-700">Event Description</label>
+          <input
+            type="text"
+            id="desc"
+            name="desc"
+            value={eventData.desc}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required
@@ -110,7 +128,16 @@ export default function AddEventPage() {
         </div>
         <div className="mb-4">
           <label htmlFor="loc" className="block text-sm font-medium text-gray-700">Location</label>
-          <div className="w-full" style={{ height: '40vh' }}>
+          <input
+            type="text"
+            id="loc"
+            name="loc"
+            value={eventData.loc}
+            onChange={handleChange}
+            className="mt-1 block w-full mb-4 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            required
+          />
+          <div className="w-full h-[40vh] mb-4">
             {position ? (
               <MapContainer center={position} zoom={13} scrollWheelZoom={true} style={{ height: '100%', width: '100%' }}>
                 <TileLayer
@@ -184,7 +211,7 @@ export default function AddEventPage() {
         </div>
         <button
           type="submit"
-          className="w-full px-3 py-2 bg-[#FF7F3E] text-white rounded-md shadow-md hover:bg-[#FF6619]"
+          className="w-full px-3 py-2 bg-[#FF7F3E] text-white font-semibold rounded-md shadow-md hover:bg-[#FF5600]"
         >
           Create Event
         </button>

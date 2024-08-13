@@ -14,8 +14,7 @@ interface Event {
   PIC: string;
   regisStart: string;
   regisEnd: string;
-  eventStart: string;
-  eventEnd: string;
+  eventDate: string;
   loc: string;
 }
 
@@ -25,10 +24,9 @@ const eventData: Event[] = [
   eventName: "Badminton",
   eventDetail: "Bulu tangkis atau tepuk bulu (bahasa Inggris: badminton; bentuk tidak baku: bulutangkis) adalah suatu olahraga raket yang menggunakan raket untuk memukul kok melewati jaring. Meskipun dapat dimainkan dengan tim yang lebih besar, bentuk permainan yang paling umum adalah 'tunggal' (dengan satu pemain di setiap sisi) dan 'ganda' (dengan dua pemain di setiap sisi) yang saling berlawanan.",
   PIC: "Fikri Ahsanandi",
-  regisStart: "10 July 2024",
-  regisEnd: "13 July 2024",
-  eventStart: "14 July 2024",
-  eventEnd: "14 July 2024",
+  regisStart: "10 Juli 2024",
+  regisEnd: "13 Juli 2024",
+  eventDate: "14 Juli 2024",
   loc: "Kalibata",
 },
 {
@@ -36,10 +34,9 @@ const eventData: Event[] = [
   eventName: "Senam",
   eventDetail: "Senam merupakan suatu cabang olahraga yang melibatkan performa gerakan yang membutuhkan kekuatan kecepatan dan keserasian gerakan fisik yang teratur. Bentuk modern dari senam ialah Palang tak seimbang, balok keseimbangan, dan senam lantai. Bentuk-bentuk tersebut konon berkembang dari latihan yang digunakan oleh bangsa Yunani kuno untuk menaiki dan menuruni seekor kuda dan pertunjukan sirkus. Adapun bentuk modern dari senam seperti palang tak seimbang, balok keseimbangan, dan senam lantai.",
   PIC: "Ivan Fabriano",
-  regisStart: "5 August 2024",
-  regisEnd: "13 July 2024",
-  eventStart: "10 August 2024",
-  eventEnd: "10 August 2024",
+  regisStart: "5 Agustus 2024",
+  regisEnd: "13 Agustus 2024",
+  eventDate: "10 Agustus 2024",
   loc: "Parkiran",
 },
 {
@@ -47,10 +44,9 @@ const eventData: Event[] = [
   eventName: "Ping Pong",
   eventDetail: "Tenis meja (bahasa Inggris: Table Tennis) atau pingpong merupakan olahraga yang melibatkan dua atau empat pemain yang memukul bola plastik/bola pingpong di atas meja menggunakan bet/bat. Permainan ini dilakukan di atas meja yang dibagi dua bagian oleh net. Kecuali servis awal, aturan permainan adalah: pemain harus memantulkan bola ke meja lawan dan lawan harus mengembalikannya ke meja lawan. Poin akan terjadi jika pemain lawan gagal mengembalikan bola. Karet bet tenis meja ada halus/licin, ada bintik pendek/serang, ada bintik panjang/bertahan. Permainan ini cepat dan membutuhkan keahlian dalam penempatan bola dan pemutaran bola yang mengubah arah pantulan bola sehingga lawan akan sulit mengembalikannya. Tenis meja menggunakan reli poin dengan game point 11 tiap set nya, bisa berlangsung 3 sampai 7 set.",
   PIC: "Mba Dillah",
-  regisStart: "5 August 2024",
-  regisEnd: "13 July 2024",
-  eventStart: "10 August 2024",
-  eventEnd: "10 August 2024",
+  regisStart: "5 Agustus 2024",
+  regisEnd: "13 Agustus 2024",
+  eventDate: "10 Agustus 2024",
   loc: "Lobby",
 },
 {
@@ -58,10 +54,9 @@ const eventData: Event[] = [
   eventName: "Sepeda",
   eventDetail: "Sepeda, kereta angin, kereta lereng, atau besikal (dari bahasa Prancis: vélocipède, melalui bahasa Belanda: vélocipède) adalah kendaraan beroda dua atau tiga yang mempunyai setang, tempat duduk, dan sepasang pengayuh yang digerakkan kaki untuk menjalankannya.",
   PIC: "Mas Iqbal",
-  regisStart: "5 August 2024",
-  regisEnd: "13 July 2024",
-  eventStart: "10 August 2024",
-  eventEnd: "10 August 2024",
+  regisStart: "5 Agustus 2024",
+  regisEnd: "13 Agustus 2024",
+  eventDate: "10 Agustus 2024",
   loc: "Bintaro",
 },
 ]; 
@@ -73,7 +68,7 @@ const userData = [
     division: "HMPM",
     joinDate: "10 August 2024",
     duration: "100 minutes",
-    loc: "valid"
+    loc: "Valid"
   },
   {
     id: "2",
@@ -81,7 +76,7 @@ const userData = [
     division: "HMPM",
     joinDate: "10 August 2024",
     duration: "90 minutes",
-    loc: "non valid"
+    loc: "Non Valid"
   },
   {
     id: "3",
@@ -89,7 +84,7 @@ const userData = [
     division: "HMPM",
     joinDate: "9 August 2024",
     duration: "100 minutes",
-    loc: "valid"
+    loc: "Valid"
   },
   {
     id: "4",
@@ -97,7 +92,7 @@ const userData = [
     division: "HMPM",
     joinDate: "8 August 2024",
     duration: "120 minutes",
-    loc: "valid"
+    loc: "Valid"
   },
   {
     id: "5",
@@ -105,7 +100,7 @@ const userData = [
     division: "HMPM",
     joinDate: "8 August 2024",
     duration: "120 minutes",
-    loc: "valid"
+    loc: "Non Valid"
   },
   {
     id: "6",
@@ -113,7 +108,7 @@ const userData = [
     division: "HMPM",
     joinDate: "8 August 2024",
     duration: "120 minutes",
-    loc: "valid"
+    loc: "Non Valid"
   },
   {
     id: "7",
@@ -137,7 +132,7 @@ const userData = [
     division: "HMPM",
     joinDate: "8 August 2024",
     duration: "120 minutes",
-    loc: "valid"
+    loc: "Non Valid"
   },
   {
     id: "10",
@@ -173,25 +168,29 @@ const DetailEvent = () => {
 
   return (
     <div className="p-10">
-      <div className="max-w-2xl">
-        <img src="/badminton.jpg" alt="event image" className="mb-2 max-w-none w-100% h-auto"/>
-        <h1 className="text-xl font-bold uppercase">{event.eventName}</h1>
-        <p>{event.eventDetail}</p>
-        <p className="mt-3">Acara akan dilaksanakan pada {event.eventStart} - {event.eventEnd} di {event.loc}.</p>
-        <p className="mt-3">Pendaftaran dibuka pada {event.regisStart} - {event.regisEnd}.</p>
+      <div>
+        <div className="flex">
+          <img src="/badminton.jpg" alt="event image" className="mb-2 w-[50vh] h-[50vh] "/>
+          <div className="flex-col ml-10">
+            <h1 className="text-xl font-bold uppercase">{event.eventName}</h1>
+            <p>{event.eventDetail}</p>
+            <p className="mt-3">Acara akan dilaksanakan pada {event.eventDate} di {event.loc}.</p>
+            <p className="mt-3">Pendaftaran dibuka pada {event.regisStart} - {event.regisEnd}.</p>
+          </div>
+        </div>
       </div>
-      <div className="flex justify-between mt-10 mb-2 items-center">
+      <div className="flex justify-between mt-10 mb-2 items-end">
         <h1 className="font-semibold uppercase"> List Partisipan</h1>
-        <div className="flex justify-end mb-2">
+        <div className="flex justify-end">
           <button 
-            className="px-2 py-1 text-sm bg-[#FF7F3E] text-white rounded-md flex items-center hover:bg-[#FF6619]">
+            className="px-2 py-1 text-sm bg-[#027FB9] text-white font-semibold rounded-md flex items-center hover:bg-[#036999]">
             <CgSoftwareUpload className="mr-1 h-5 w-5"/>
             Export Participant Data
           </button>
         </div>
         </div>
       <div>
-        <div className="w-full max-h-96 bg-white p-6 border rounded-xl shadow-sm overflow-x-auto overflow-y-auto">
+        <div className="w-full max-h-[55vh] bg-white p-6 border rounded-xl shadow-sm overflow-x-auto overflow-y-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
@@ -250,11 +249,13 @@ const DetailEvent = () => {
                   </div>
                 </td>
                 <td>
-                  <button className="px-2 py-1 ml-1 bg-[#027FB9] rounded-md text-xs text-white flex items-center hover:bg-[#036999]"
-                  onClick={handleDownloadEvidenceClick}>
-                  <CgSoftwareDownload className="w-3 h-3 mr-2" />{/*download evidence*/}
-                  Download
-                  </button>
+                  <div className="flex justify-center">
+                    <button className="px-2 py-1 ml-1 bg-[#FF7F3E] rounded-md text-xs text-white flex hover:bg-[#FF6619]"
+                    onClick={handleDownloadEvidenceClick}>
+                    <CgSoftwareDownload className="w-3 h-3 mr-2" />{/*download evidence*/}
+                    Download
+                    </button>
+                  </div>
                 </td>  
                 </tr>
               ))}
