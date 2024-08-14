@@ -9,18 +9,6 @@ import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import L from 'leaflet';
 
-interface Event {
-  id: string;
-  eventName: string;
-  eventDetail: string;
-  PIC: string;
-  regisStart: string;
-  regisEnd: string;
-  eventStart: string;
-  eventEnd: string;
-  loc: string;
-}
-
 // List of eventTypes
 const eventTypes = [
   "Badminton",
@@ -33,6 +21,18 @@ const eventTypes = [
   "Tenis",
   "Voli"
 ];
+
+interface Event {
+  id: string;
+  eventName: string;
+  eventDetail: string;
+  PIC: string;
+  regisStart: string;
+  regisEnd: string;
+  eventStart: string;
+  eventEnd: string;
+  loc: string;
+}
 
 const eventData: Event[] = [
   {
@@ -86,14 +86,14 @@ export default function EditEventPage() {
   const router = useRouter();
   const [position, setPosition] = useState<[number, number]>([-6.257377, 106.835903]);
 
-  const [eventDataState, setEventDataState] = useState<Event | undefined>();
+  const [eventDataState, setEventDataState] :any = useState<Event | undefined>();
 
   useEffect(() => {
     if (id) {
       const foundEvent = eventData.find((event) => event.id === id);
       if (foundEvent) {
         setEventDataState(foundEvent);
-        setPosition([-6.257377, 106.835903]); // Set a default position, or use event's location coordinates if available
+        setPosition([-6.257377, 106.835903]);
       }
     }
   }, [id]);
@@ -140,7 +140,7 @@ export default function EditEventPage() {
           <select
             id="eventType"
             name="eventType"
-            value={eventDataState.eventName}
+            value={eventDataState.eventType}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required
@@ -194,7 +194,7 @@ export default function EditEventPage() {
             )}
           </div>
         <div className="mb-4">
-          <label htmlFor="regisStart" className="block text-sm font-medium text-gray-700">PIC</label>
+          <label htmlFor="regisStart" className="block text-sm font-medium text-gray-700">Registration Start Date</label>
           <input
             type="date"
             id="regisStart"
@@ -206,7 +206,7 @@ export default function EditEventPage() {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="regisEnd" className="block text-sm font-medium text-gray-700">PIC</label>
+          <label htmlFor="regisEnd" className="block text-sm font-medium text-gray-700">Registration End Date</label>
           <input
             type="date"
             id="regisEnd"
@@ -218,7 +218,7 @@ export default function EditEventPage() {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="eventStart" className="block text-sm font-medium text-gray-700">PIC</label>
+          <label htmlFor="eventStart" className="block text-sm font-medium text-gray-700">Event Start Date</label>
           <input
             type="date"
             id="eventStart"
@@ -230,7 +230,7 @@ export default function EditEventPage() {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="eventEnd" className="block text-sm font-medium text-gray-700">PIC</label>
+          <label htmlFor="eventEnd" className="block text-sm font-medium text-gray-700">Event End Date</label>
           <input
             type="date"
             id="eventEnd"
