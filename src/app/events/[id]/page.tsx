@@ -3,6 +3,7 @@
 import { useParams } from 'next/navigation'; 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'
+import Link from "next/link";
 
 import { CgSoftwareDownload } from "react-icons/cg";
 import { CgSoftwareUpload } from "react-icons/cg";
@@ -162,10 +163,6 @@ const DetailEvent = () => {
   
   const router = useRouter();
 
-  const handleDownloadEvidenceClick = () => {
-    router.push('/events/evidence'); // user evidence page
-  };
-
   return (
     <div className="p-10">
       <div>
@@ -250,11 +247,16 @@ const DetailEvent = () => {
                 </td>
                 <td>
                   <div className="flex justify-center">
-                    <button className="px-2 py-1 ml-1 bg-[#FF7F3E] rounded-md text-xs text-white flex hover:bg-[#FF6619]"
-                    onClick={handleDownloadEvidenceClick}>
-                    <CgSoftwareDownload className="w-3 h-3 mr-2" />{/*download evidence*/}
-                    Download
-                    </button>
+                    <div key={value.id}>
+                    <Link href={`/events/evidence/${value.id}`} legacyBehavior>
+                      <a>
+                        <button className="px-2 py-1 ml-1 bg-[#FF7F3E] rounded-md text-xs text-white flex hover:bg-[#FF6619]">
+                        <CgSoftwareDownload className="w-3 h-3 mr-2" />{/*download evidence*/}
+                        Download
+                        </button>
+                      </a>
+                    </Link>
+                    </div>
                   </div>
                 </td>  
                 </tr>

@@ -72,7 +72,7 @@ export default function AddEventPage() {
 
   return (
     <div className="flex flex-col bg-gray-100 p-4 min-h-screen items-center">
-      <h1 className="font-bold p-10 uppercase">Create New Event</h1>
+      <h1 className="font-bold mt-10 uppercase">Create New Event</h1>
       <form onSubmit={handleSubmit} className="w-full max-w-md p-6 rounded-lg">
         <div className="mb-4">
           <label htmlFor="event" className="block text-sm font-medium text-gray-700">Event Name</label>

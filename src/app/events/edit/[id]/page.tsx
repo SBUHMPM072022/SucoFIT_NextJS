@@ -121,7 +121,7 @@ export default function EditEventPage() {
 
   return (
     <div className="flex flex-col bg-gray-100 p-4 min-h-screen items-center">
-      <h1 className="font-bold p-10 uppercase"> Edit Event</h1>
+      <h1 className="font-bold mt-10 uppercase"> Edit Event</h1>
       <form onSubmit={handleSubmit} className="w-full max-w-md p-6 rounded-lg">
         <div className="mb-4">
           <label htmlFor="eventName" className="block text-sm font-medium text-gray-700">Event Name</label>
@@ -130,6 +130,18 @@ export default function EditEventPage() {
             id="eventName"
             name="eventName"
             value={eventDataState.eventName}
+            onChange={handleChange}
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="eventName" className="block text-sm font-medium text-gray-700">Event Description</label>
+          <input
+            type="text"
+            id="eventDetail"
+            name="eventDetail"
+            value={eventDataState.eventDetail}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required
