@@ -8,7 +8,7 @@ import { BsCalendar4Event } from "react-icons/bs";
 import { PiMedalMilitaryLight } from "react-icons/pi";
 import { MdLogout, MdKeyboardArrowDown } from "react-icons/md";
 
-const Sidebar = () => {
+const Navbar = () => {
   const router = useRouter();
   const [activeButton, setActiveButton] = useState('dashboard');
 
@@ -72,7 +72,7 @@ const Sidebar = () => {
         </div>
       </div>
 
-      <div className="flex flex-col flex-grow">
+      {/* <div className="flex flex-col flex-grow">
 
         <header className="flex justify-between items-center py-4 px-10">
           <div>
@@ -94,10 +94,10 @@ const Sidebar = () => {
           </div>
         </header>
 
-      </div>
+      </div> */}
     </div>
   );
 };
 
-export default Sidebar;
+export default Navbar;
 

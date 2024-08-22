@@ -1,6 +1,22 @@
+"use client";
 
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 export default function Register() {
+
+  const router = useRouter();
+  const [showPassword1, setShowPassword1] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
+
+  const togglePasswordVisibility1 = () => {
+    setShowPassword1(!showPassword1);
+  };
+  const togglePasswordVisibility2 = () => {
+    setShowPassword2(!showPassword2);
+  };
+
   return (
     <>
 
@@ -86,15 +102,22 @@ export default function Register() {
                   Password
                 </label>
               </div>
-              <div className="mt-2">
+              <div className="mt-2 relative">
                 <input
                   id="password"
                   name="password"
-                  type="password"
+                  type={showPassword1 ? "text" : "password"}
                   required
                   autoComplete="current-password"
                   className="block w-full rounded-md border-0 px-1.5 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
                 />
+                <button
+                  type="button"
+                  onClick={togglePasswordVisibility1}
+                  className="absolute inset-y-0 right-0 px-2 flex items-center text-gray-500"
+                >
+                  {showPassword1 ? <FaEyeSlash /> : <FaEye />}
+                </button>
               </div>
             </div>
 
@@ -104,15 +127,22 @@ export default function Register() {
                   Confirm Password
                 </label>
               </div>
-              <div className="mt-2">
+              <div className="mt-2 relative">
                 <input
                   id="password"
                   name="password"
-                  type="password"
+                  type={showPassword2 ? "text" : "password"}
                   required
                   autoComplete="current-password"
                   className="block w-full rounded-md border-0 px-1.5 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
                 />
+                <button
+                  type="button"
+                  onClick={togglePasswordVisibility2}
+                  className="absolute inset-y-0 right-0 px-2 flex items-center text-gray-500"
+                >
+                  {showPassword2 ? <FaEyeSlash /> : <FaEye />}
+                </button>
               </div>
             </div>
 

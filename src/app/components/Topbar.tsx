@@ -15,18 +15,18 @@ const TopBar = () => {
         <h1 className="text-xl font-bold">Management Dashboard</h1>
         <p className="text-gray-600">{currentDate}</p>
       </div>
-      <div className="flex items-center space-x-2 bg-white rounded-lg h-12">
+      <div className="flex items-center space-x-2 bg-white rounded-lg h-12 w-28">
+        <div className="flex items-center space-x-1">
         <img
           src="Ellipse.png"
           alt="Admin"
-          width={40}
-          height={40}
-          className="rounded-full"
+          width={32}
+          height={32}
+          className="rounded-full m-2"
         />
-        <button className='flex items-center space-x-2'>
         <span className="font-semibold">Admin</span>
-        <span className="material-icons-outlined"><MdKeyboardArrowDown /></span>
-        </button>
+        {/* <span className="material-icons-outlined"><MdKeyboardArrowDown /></span> */}
+        </div>
       </div>
     </div>
   );
