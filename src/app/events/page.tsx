@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import { useRouter } from 'next/navigation'
 
 import { CgMathPlus, CgEye, CgPen, CgTrash} from "react-icons/cg";
 import Link from "next/link";
 import { FC } from 'react';
+import axios from "axios";
 
 
 const userData = [
@@ -114,6 +115,7 @@ const userData = [
 
 export default function listEvent() {
   const router = useRouter();
+  const [eventData, setEventData] : any = useState([]); 
 
   const handleCreateEventClick = () => {
     router.push('/events/create'); // create new event page
@@ -122,7 +124,21 @@ export default function listEvent() {
   const handleEditEventClick = () => {
     router.push('/events/edit'); // edit event page
   };
+  
+  async function getUser() {
+    try {
+      const response = await axios.get('http://localhost:4006/api/v1/web/event');
+      setEventData(response.data.data);
+      console.log(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
+  useEffect(() => {
+    getUser()
+  }, []);
+  
   return (
     <div className="flex flex-col p-10 min-h-screen">
       <div className="flex justify-between items-center">
@@ -167,31 +183,31 @@ export default function listEvent() {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {userData.map((value, i) => (
+            {eventData.map((value: any, i: number) => (
               <tr key={i}>
                 <td className="px-2 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">{i + 1}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-medium text-gray-900">
-                    {value.eventName}
+                    {value.event_name}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-center text-sm font-medium text-gray-900">
-                    {value.PIC}
+                    {value.pic}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-center text-sm font-medium text-gray-900">
-                    {value.loc}
+                    {value.location}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-center text-sm text-gray-900">{value.regisStart} - {value.regisEnd}</div>
+                  <div className="text-center text-sm text-gray-900">{value.registration_date}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-center text-sm text-gray-900">{value.eventStart} - {value.eventEnd}</div>
+                  <div className="text-center text-sm text-gray-900">{value.event_date}</div>
                 </td>
                 <td className="px-6 py-4 flex whitespace-nowrap">
                   <div key={value.id}>

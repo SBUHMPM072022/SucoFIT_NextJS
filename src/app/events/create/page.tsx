@@ -7,39 +7,44 @@ import 'leaflet/dist/leaflet.css';
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import L from 'leaflet';
+import axios from "axios";
 
 export default function AddEventPage() {
   const router = useRouter();
   const [position, setPosition] = useState<[number, number]>([-6.257377, 106.835903]);
+  
+  const [eventType, setEventType] : any = useState([]);
 
   const [eventData, setEventData] = useState({
-    event: '',
-    desc:'',
-    eventType: '',
-    PIC: '',
-    regisStart: '',
-    regisEnd: '',
-    eventStart: '',
-    eventEnd: '',
-    loc: '',
-    lat: -6.257377,
-    lng: 106.835903,
+    event_name: '',
+    event_description:'',
+    event_type_id: '',
+    pic: '',
+    location: '',
+    latitude: -6.257377,
+    longitude: 106.835903,
+    registration_start_date: '',
+    registration_end_date: '',
+    event_start_date: '',
+    event_end_date: '',
+    point: 0
   });
+  
 
-  // List of eventTypes
-  const eventTypes = [
-    "Badminton",
-    "Basket",
-    "Berenang",
-    "Lari",
-    "Senam",
-    "Sepeda",
-    "Ping Pong",
-    "Tenis",
-    "Voli"
-  ];
+  async function getEventType() {
+    try {
+      const response = await axios.get('http://localhost:4006/api/v1/web/event-type');
+      setEventType(response.data.data);
+      console.log(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   useEffect(() => {
+
+    getEventType()
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
@@ -60,79 +65,91 @@ export default function AddEventPage() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push('/events'); 
+    console.log(eventData)
+    // router.push('/events'); 
+    axios.post('http://localhost:4006/api/v1/web/event', eventData
+    )
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   };
 
   const handleDragEnd = (event: L.LeafletEvent) => {
     const marker = event.target as L.Marker;
-    const newPosition = marker.getLatLng();
-    alert(`Latitude: ${newPosition.lat}, Longitude: ${newPosition.lng}`);
-    setPosition([newPosition.lat, newPosition.lng]);
+    const newPosition : any = marker.getLatLng();
+    // alert(`Latitude: ${newPosition.latitude}, Longitude: ${newPosition.longitude}`);
+    console.log(newPosition.lat)
+    setEventData({ ...eventData, latitude: newPosition.lat, longitude: newPosition.lng });
   };
+
+
 
   return (
     <div className="flex flex-col bg-gray-100 p-4 min-h-screen items-center">
       <h1 className="font-bold mt-10 uppercase">Create New Event</h1>
       <form onSubmit={handleSubmit} className="w-full max-w-md p-6 rounded-lg">
         <div className="mb-4">
-          <label htmlFor="event" className="block text-sm font-medium text-gray-700">Event Name</label>
+          <label htmlFor="event_name" className="block text-sm font-medium text-gray-700">Event Name</label>
           <input
             type="text"
-            id="event"
-            name="event"
-            value={eventData.event}
+            id="event_name"
+            name="event_name"
+            value={eventData.event_name}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="desc" className="block text-sm font-medium text-gray-700">Event Description</label>
+          <label htmlFor="event_description" className="block text-sm font-medium text-gray-700">Event Description</label>
           <input
             type="text"
-            id="desc"
-            name="desc"
-            value={eventData.desc}
+            id="event_description"
+            name="event_description"
+            value={eventData.event_description}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="eventType" className="block text-sm font-medium text-gray-700">Event Type</label>
+          <label htmlFor="event_type_id" className="block text-sm font-medium text-gray-700">Event Type</label>
           <select
-            id="eventType"
-            name="eventType"
-            value={eventData.eventType}
+            id="event_type_id"
+            name="event_type_id"
+            value={eventData.event_type_id}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required
           >
             <option value="">Select event type</option>
-            {eventTypes.map(type => (
-              <option key={type} value={type}>{type}</option>
+            {eventType.map((value: any, i: number) => (
+              <option key={i} value={value.value}>{value.label}</option>
             ))}
           </select>
         </div>
         <div className="mb-4">
-          <label htmlFor="PIC" className="block text-sm font-medium text-gray-700">PIC</label>
+          <label htmlFor="pic" className="block text-sm font-medium text-gray-700">PIC</label>
           <input
             type="text"
-            id="PIC"
-            name="PIC"
-            value={eventData.PIC}
+            id="pic"
+            name="pic"
+            value={eventData.pic}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="loc" className="block text-sm font-medium text-gray-700">Location</label>
+          <label htmlFor="location" className="block text-sm font-medium text-gray-700">Location</label>
           <input
             type="text"
-            id="loc"
-            name="loc"
-            value={eventData.loc}
+            id="location"
+            name="location"
+            value={eventData.location}
             onChange={handleChange}
             className="mt-1 block w-full mb-4 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required
@@ -162,56 +179,57 @@ export default function AddEventPage() {
           </div>
         </div>
         <div className="mb-4">
-          <label htmlFor="regisStart" className="block text-sm font-medium text-gray-700">Registration Start Date</label>
+          <label htmlFor="registration_start_date" className="block text-sm font-medium text-gray-700">Registration Start Date</label>
           <input
             type="date"
-            id="regisStart"
-            name="regisStart"
-            value={eventData.regisStart}
+            id="registration_start_date"
+            name="registration_start_date"
+            value={eventData.registration_start_date}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="regisEnd" className="block text-sm font-medium text-gray-700">Registration End Date</label>
+          <label htmlFor="registration_end_date" className="block text-sm font-medium text-gray-700">Registration End Date</label>
           <input
             type="date"
-            id="regisEnd"
-            name="regisEnd"
-            value={eventData.regisEnd}
+            id="registration_end_date"
+            name="registration_end_date"
+            value={eventData.registration_end_date}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="eventStart" className="block text-sm font-medium text-gray-700">Event Start Date</label>
+          <label htmlFor="event_start_date" className="block text-sm font-medium text-gray-700">Event Start Date</label>
           <input
             type="date"
-            id="eventStart"
-            name="eventStart"
-            value={eventData.eventStart}
+            id="event_start_date"
+            name="event_start_date"
+            value={eventData.event_start_date}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="eventEnd" className="block text-sm font-medium text-gray-700">Event End Date</label>
+          <label htmlFor="event_end_date" className="block text-sm font-medium text-gray-700">Event End Date</label>
           <input
             type="date"
-            id="eventEnd"
-            name="eventEnd"
-            value={eventData.eventEnd}
+            id="event_end_date"
+            name="event_end_date"
+            value={eventData.event_end_date}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required
           />
         </div>
         <button
-          type="submit"
+          type="button"
           className="w-full px-3 py-2 bg-[#FF7F3E] text-white font-semibold rounded-md shadow-md hover:bg-[#FF5600]"
+          onClick={(e: any)=>handleSubmit(e)}
         >
           Create Event
         </button>
