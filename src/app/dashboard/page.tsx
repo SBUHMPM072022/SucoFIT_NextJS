@@ -13,16 +13,18 @@ const Dashboard = () => {
 
   return (
     <div className='h-screen flex'>
-      <Navbar/>
+      <Navbar />
 
       <div className="flex flex-col flex-grow">
-          <Topbar/>
-          <div className="flex flex-row p-6 gap-4">
-          
+        <Topbar />
+        <div className="flex flex-row p-6 gap-6">
+          <div >
             <Activeuser />
+          </div>
+          <div className='flex flex-grow'>
             <Leaderboard />
           </div>
-
+        </div>
       </div>
     </div>
   );

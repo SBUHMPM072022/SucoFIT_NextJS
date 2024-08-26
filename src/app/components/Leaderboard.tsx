@@ -17,7 +17,7 @@ const leaderboardData = [
 
 const Leaderboard = () => {
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg w-full md:w-1/2 lg:w-1/3">
+    <div className="bg-white p-6 rounded-lg shadow-lg w-full ">
       <h2 className="text-xl font-bold mb-2">Leaderboard</h2>
       <p className="text-gray-600 mb-4">Last Update Data 25 July 2024</p>
       <div className="space-y-4 h-80 overflow-y-auto pr-2">
