@@ -3,8 +3,16 @@
 import { useState } from 'react';
 import { FaPlus } from "react-icons/fa6";
 import { CgPen, CgTrash } from "react-icons/cg";
+import Link from "next/link";
 
 import Navbar from '../components/Navbar';
+
+interface Event {
+    id: string;
+    rank: string;
+    desc: string;
+    prize: string;
+}
 
 const rewards = [
     { id: 1, rank: '', desc: 'Fikri Ahsanandi', prize: 'Rp 100.000' },
@@ -69,7 +77,11 @@ export default function Reward() {
                                     <td className="py-2 px-4 border-b text-center">{reward.desc}</td>
                                     <td className="py-2 px-4 border-b text-center">{reward.prize}</td>
                                     <td className="py-2 px-4 border-b space-x-2 text-center">
-                                        <button className="bg-[#027FB9] text-white px-2 py-1.5 rounded-md hover:bg-[#006695]"><CgPen /></button>
+                                        <Link href={`/reward/edit/${reward.id}`} legacyBehavior>
+                                            <a>
+                                                <button className="bg-[#027FB9] text-white px-2 py-1.5 rounded-md hover:bg-[#006695]"><CgPen /></button>
+                                            </a>
+                                        </Link>
                                         <button className="bg-[#FF7F3E] text-white px-2 py-1.5 rounded-md hover:bg-[#FF5600]"><CgTrash /></button>
                                     </td>
                                 </tr>

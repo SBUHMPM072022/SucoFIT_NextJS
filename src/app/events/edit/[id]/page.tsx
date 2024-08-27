@@ -8,6 +8,7 @@ import 'leaflet/dist/leaflet.css';
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import L from 'leaflet';
+import axios from "axios"
 
 // List of eventTypes
 const eventTypes = [
@@ -118,6 +119,20 @@ export default function EditEventPage() {
     alert(`Latitude: ${newPosition.lat}, Longitude: ${newPosition.lng}`);
     setPosition([newPosition.lat, newPosition.lng]);
   };
+
+  async function editEvent() {
+   try {
+    const res = await axios.put(`http://localhost:4006/api/v1/web/event/${id}`,
+      {
+        event_name: "butut"
+      }
+    );
+    console.log("bututututut")
+  } catch (error) {
+    console.error(error);
+  }
+  }
+
 
   return (
     <div className="flex flex-col bg-gray-100 p-4 min-h-screen items-center">
@@ -255,7 +270,8 @@ export default function EditEventPage() {
         </div>
         </div>
         <div className="flex justify-between">
-          <button type="submit" className="px-2 py-1 bg-[#027FB9] text-sm text-white font-semibold rounded-md hover:bg-[#036999]">
+          <button type="submit" className="px-2 py-1 bg-[#027FB9] text-sm text-white font-semibold rounded-md hover:bg-[#036999]"
+          onClick={editEvent}>
             Save Changes
           </button>
           <button type="button" className="px-2 py-1 bg-[#FF7F3E] text-sm text-white font-semibold rounded-md shadow-md hover:bg-[#FF5600]"
