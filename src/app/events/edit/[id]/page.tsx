@@ -86,14 +86,31 @@ export default function EditEventPage() {
   const { id } = useParams();
   const router = useRouter();
   const [position, setPosition] = useState<[number, number]>([-6.257377, 106.835903]);
-
-  const [eventDataState, setEventDataState] :any = useState<Event | undefined>();
+  const [eventType, setEventType] : any = useState([]);
+  const [eventDataState, setEditEvent] :any = useState<Event | undefined>();
+  
+  async function getEditEvent() {
+    try {
+      const response = await axios.get(`http://localhost:4006/api/v1/web/event/${id}`);
+      setEditEvent(response.data.data);
+      console.log(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
+  useEffect(() => {
+    getEditEvent()
+    //console.log(new Date(eventDataState.registration_start_date).toISOString().split('T')[0]);
+    
+    getEventType()
+  }, []);
 
   useEffect(() => {
     if (id) {
       const foundEvent = eventData.find((event) => event.id === id);
       if (foundEvent) {
-        setEventDataState(foundEvent);
+        setEditEvent(foundEvent);
         setPosition([-6.257377, 106.835903]);
       }
     }
@@ -105,7 +122,7 @@ export default function EditEventPage() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setEventDataState({ ...eventDataState, [name]: value });
+    setEditEvent({ ...eventDataState, [name]: value });
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -123,81 +140,89 @@ export default function EditEventPage() {
   async function editEvent() {
    try {
     const res = await axios.put(`http://localhost:4006/api/v1/web/event/${id}`,
-      {
-        event_name: "butut"
-      }
+      eventDataState
     );
-    console.log("bututututut")
+    console.log(editEvent);
+    
   } catch (error) {
     console.error(error);
   }
   }
 
+  async function getEventType() {
+    try {
+      const response = await axios.get('http://localhost:4006/api/v1/web/event-type');
+      setEventType(response.data.data);
+      console.log(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <div className="flex flex-col bg-gray-100 p-4 min-h-screen items-center">
       <h1 className="font-bold mt-10 uppercase"> Edit Event</h1>
       <form onSubmit={handleSubmit} className="w-full max-w-md p-6 rounded-lg">
         <div className="mb-4">
-          <label htmlFor="eventName" className="block text-sm font-medium text-gray-700">Event Name</label>
+          <label htmlFor="event_name" className="block text-sm font-medium text-gray-700">Event Name</label>
           <input
             type="text"
-            id="eventName"
-            name="eventName"
-            value={eventDataState.eventName}
+            id="event_name"
+            name="event_name"
+            value={eventDataState.event_name}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="eventName" className="block text-sm font-medium text-gray-700">Event Description</label>
+          <label htmlFor="event_description" className="block text-sm font-medium text-gray-700">Event Description</label>
           <input
             type="text"
-            id="eventDetail"
-            name="eventDetail"
-            value={eventDataState.eventDetail}
+            id="event_description"
+            name="event_description"
+            value={eventDataState.event_description}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="eventType" className="block text-sm font-medium text-gray-700">Event Type</label>
+          <label htmlFor="event_type_id" className="block text-sm font-medium text-gray-700">Event Type</label>
           <select
-            id="eventType"
-            name="eventType"
-            value={eventDataState.eventType}
+            id="event_type_id"
+            name="event_type_id"
+            value={eventDataState.event_type_id}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required
           >
             <option value="">Select event type</option>
-            {eventTypes.map(type => (
-              <option key={type} value={type}>{type}</option>
+            {eventType.map((value: any, i: number) => (
+              <option key={i} value={value.value}>{value.label}</option>
             ))}
           </select>
         </div>
         <div className="mb-4">
-          <label htmlFor="PIC" className="block text-sm font-medium text-gray-700">PIC</label>
+          <label htmlFor="pic" className="block text-sm font-medium text-gray-700">PIC</label>
           <input
             type="text"
-            id="PIC"
-            name="PIC"
-            value={eventDataState.PIC}
+            id="pic"
+            name="pic"
+            value={eventDataState.pic}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="loc" className="block text-sm font-medium text-gray-700">Location</label>
+          <label htmlFor="location" className="block text-sm font-medium text-gray-700">Location</label>
           <div className="mb-4">
           <input
             type="text"
-            id="loc"
-            name="loc"
-            value={eventDataState.loc}
+            id="location"
+            name="location"
+            value={eventDataState.location}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required
@@ -221,48 +246,48 @@ export default function EditEventPage() {
             )}
           </div>
         <div className="mb-4">
-          <label htmlFor="regisStart" className="block text-sm font-medium text-gray-700">Registration Start Date</label>
+          <label htmlFor="registration_start_date" className="block text-sm font-medium text-gray-700">Registration Start Date</label>
           <input
             type="date"
-            id="regisStart"
-            name="regisStart"
-            value={eventDataState.regisStart}
+            id="registration_start_date"
+            name="registration_start_date"
+            value={eventDataState.registration_start_date}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="regisEnd" className="block text-sm font-medium text-gray-700">Registration End Date</label>
+          <label htmlFor="registration_end_date" className="block text-sm font-medium text-gray-700">Registration End Date</label>
           <input
             type="date"
-            id="regisEnd"
-            name="regisEnd"
-            value={eventDataState.regisEnd}
+            id="registration_end_date"
+            name="registration_end_date"
+            value={eventDataState.registration_end_date}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="eventStart" className="block text-sm font-medium text-gray-700">Event Start Date</label>
+          <label htmlFor="event_start_date" className="block text-sm font-medium text-gray-700">Event Start Date</label>
           <input
             type="date"
-            id="eventStart"
-            name="eventStart"
-            value={eventDataState.eventStart}
+            id="event_start_date"
+            name="event_start_date"
+            value={eventDataState.event_start_date}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="eventEnd" className="block text-sm font-medium text-gray-700">Event End Date</label>
+          <label htmlFor="event_end_date" className="block text-sm font-medium text-gray-700">Event End Date</label>
           <input
             type="date"
-            id="eventEnd"
-            name="eventEnd"
-            value={eventDataState.eventEnd}
+            id="event_end_date"
+            name="event_end_date"
+            value={eventDataState.event_end_date}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required
@@ -270,13 +295,13 @@ export default function EditEventPage() {
         </div>
         </div>
         <div className="flex justify-between">
-          <button type="submit" className="px-2 py-1 bg-[#027FB9] text-sm text-white font-semibold rounded-md hover:bg-[#036999]"
-          onClick={editEvent}>
-            Save Changes
-          </button>
           <button type="button" className="px-2 py-1 bg-[#FF7F3E] text-sm text-white font-semibold rounded-md shadow-md hover:bg-[#FF5600]"
           onClick={() => router.push('/events')}>
             Cancel
+          </button>
+          <button type="submit" className="px-2 py-1 bg-[#027FB9] text-sm text-white font-semibold rounded-md hover:bg-[#036999]"
+          onClick={editEvent}>
+            Save Changes
           </button>
         </div>
       </form>
