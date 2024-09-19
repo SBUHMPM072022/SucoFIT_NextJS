@@ -203,12 +203,12 @@ async function getEventDetail(){
         </div>
       </div>
       <div className="flex justify-between mt-10 mb-2 items-end">
-        <h1 className="font-semibold uppercase"> List Partisipan</h1>
+        <h1 className="font-semibold uppercase">Participants</h1>
         <div className="flex justify-end">
           <button 
             className="px-2 py-1 text-sm bg-[#027FB9] text-white font-semibold rounded-md flex items-center hover:bg-[#036999]">
             <CgSoftwareUpload className="mr-1 h-5 w-5"/>
-            Export Participant Data
+            Export Participants Data
           </button>
         </div>
         </div>

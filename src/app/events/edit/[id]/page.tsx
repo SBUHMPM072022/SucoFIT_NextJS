@@ -101,8 +101,7 @@ export default function EditEventPage() {
   
   useEffect(() => {
     getEditEvent()
-    //console.log(new Date(eventDataState.registration_start_date).toISOString().split('T')[0]);
-    
+   
     getEventType()
   }, []);
 

@@ -184,7 +184,7 @@ export default function listEvent() {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {eventData.map((value: any, i: number) => (
-              <tr key={i}>
+              <tr key={i} className="text-center">
                 <td className="px-2 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">{i + 1}</div>
                 </td>

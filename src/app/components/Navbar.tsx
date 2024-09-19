@@ -44,7 +44,7 @@ const Navbar = () => {
         </div>
         <nav className="flex-grow">
           <button
-            className={`flex items-center p-2 rounded w-40 ${activeButton === 'dashboard'
+            className={`flex items-center p-2 mb-1 rounded w-40 ${activeButton === 'dashboard'
                 ? 'bg-[#027FB9] text-white'
                 : 'text-gray-900 hover:bg-[#027FB9] hover:text-white'
               }`}
@@ -53,12 +53,12 @@ const Navbar = () => {
             </span>
             <span className="ml-2">Dashboard</span>
           </button>
-          <button className="flex items-center p-2 text-gray-900 hover:bg-[#027FB9] hover:text-white rounded hover:w-40"
+          <button className="flex items-center p-2 mb-1 text-gray-900 hover:bg-[#027FB9] hover:text-white rounded hover:w-40"
             onClick={handleEvents}>
             <span className="icons"><BsCalendar4Event /></span>
             <span className="ml-2">Events</span>
           </button>
-          <button className="flex items-center p-2 text-gray-900 hover:bg-[#027FB9] hover:text-white rounded hover:w-40"
+          <button className="flex items-center p-2 mb-1 text-gray-900 hover:bg-[#027FB9] hover:text-white rounded hover:w-40"
             onClick={handleReward}>
             <span className="icons"><PiMedalMilitaryLight /></span>
             <span className="ml-2">Reward</span>
