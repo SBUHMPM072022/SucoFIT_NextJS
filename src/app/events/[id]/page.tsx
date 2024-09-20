@@ -211,7 +211,7 @@ async function getEventDetail(){
             Export Participants Data
           </button>
         </div>
-        </div>
+      </div>
       <div>
         <div className="w-full max-h-[55vh] bg-white p-6 border rounded-xl shadow-sm overflow-x-auto overflow-y-auto">
           <table className="min-w-full divide-y divide-gray-200">
