@@ -36,6 +36,13 @@ export default function Login() {
     )
     .then(function (response) {
       console.log(response);
+
+      if (response.status === 200) {
+        router.push('/dashboard');
+      } else {
+        console.log('Login failed');
+      }
+
     })
     .catch(function (error) {
       console.log(error);
@@ -54,8 +61,10 @@ export default function Login() {
           />
         </div>
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Exercises unlock your productivity potential
+          <h2 className="mt-10 text-center text-2xl leading-9 tracking-tight text-gray-900">
+          <span className="text-[#027FB9]">Exercises</span> unlock your 
+          <br/>
+          <span className="text-[#FF7F3E]">productivity</span> potential
           </h2>
         </div>
 
@@ -84,11 +93,6 @@ export default function Login() {
                 <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
                   Password
                 </label>
-                {/* <div className="text-sm">
-                  <a href="#" className="font-semibold text-[#027FB9] hover:text-[#006695]">
-                    Forgot password?
-                  </a>
-                </div> */}
               </div>
               <div className="mt-2 relative">
                 <input

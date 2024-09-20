@@ -29,7 +29,7 @@ const ActiveUserCard = () => {
     <div className="relative bg-[#027FB9] text-white p-10 rounded-lg w-80">
       <div className="flex items-center space-x-2">
         <div className="flex-grow p-2">
-          <h2 className="text-lg">Total Active User</h2>
+          <h2 className="text-lg font-bold">Total Active User</h2>
           <p className="text-4xl font-semibold py-2">
             {activeUser.total_active_user} <span className="text-xl">/ {activeUser.total_user}</span>
           </p>

@@ -76,7 +76,7 @@ const Navbar = () => {
   return (
     <div className='h-screen flex'>
 
-      <div className="flex flex-col w-48 bg-[#FFFFFF] p-4">
+      <div className="flex flex-col w-[100%] bg-[#FFFFFF] p-4">
         <div className="flex items-center mb-8">
           <img src="Logo_SucoFIT.png" alt="Logo" className="h-8 w-8 mr-2" />
           <span className="text-xl font-bold">SucoFIT</span>

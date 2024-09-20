@@ -26,46 +26,16 @@ export default function Reward() {
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
 
-    const [modalData, setModalData] = useState({
-        start_date: '',
-        end_date: '',
-        start_rank: '',
-        end_rank: ''
-      });
-
-    // const handleSubmit = (e: { preventDefault: () => void; }) => {
-    //     e.preventDefault();
-
-    //     console.log('Start Date:', start_date);
-    //     console.log('End Date:', end_date);
-    //     console.log('Start Rank:', start_rank);
-    //     console.log('End Rank:', end_rank);
-
-    //     closeModal();
-    // };
-    
-    // const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    //     const { name, value } = e.target;
-    //     setModalData({ ...modalData, [name]: value });
-    //   };
-
-    // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    //     e.preventDefault();
-    //     console.log(modalData) 
-    //     axios.post('http://localhost:4006/api/v1/web/reward', modalData
-    //     )
-    //     .then(function (response) {
-    //       console.log(response);
-    //     })
-    //     .catch(function (error) {
-    //       console.log(error);
-    //     });
-    //   };
+    // const [modalData, setModalData] = useState({
+    //     start_date: '',
+    //     end_date: '',
+    //     start_rank: '',
+    //     end_rank: ''
+    //   });
 
     const handleSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
     
-        // Create the position array
         const position = [];
         for (let i = parseInt(start_rank); i <= parseInt(end_rank); i++) {
             position.push(i);
@@ -74,16 +44,17 @@ export default function Reward() {
         const newRewardData = {
             start_date,
             end_date,
-            position,  // Include position array
+            start_rank,
+            end_rank
         };
     
         console.log('Start Date:', start_date);
         console.log('End Date:', end_date);
         console.log('Position:', position);
     
-        // You can send this data using Axios
         axios.post('http://localhost:4006/api/v1/web/reward', newRewardData)
             .then(function (response) {
+                getReward();
                 console.log(response);
             })
             .catch(function (error) {
@@ -93,7 +64,6 @@ export default function Reward() {
         closeModal();
     };
     
-
     async function getReward() {
         try {
           const response = await axios.get('http://localhost:4006/api/v1/web/reward');

@@ -10,7 +10,7 @@ const TopBar = () => {
   });
 
   return (
-    <div className="flex justify-between items-center p-4">
+    <div className="flex justify-between mb-6">
       <div>
         <h1 className="text-xl font-bold">Management Dashboard</h1>
         <p className="text-gray-600">{currentDate}</p>

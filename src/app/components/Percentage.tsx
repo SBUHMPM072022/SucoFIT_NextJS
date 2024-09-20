@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import React from "react";
 import { PieChart, Pie, Label } from "recharts";
+import { FaSortDown } from "react-icons/fa";
+
 
 const data01 = [
     { name: "A1", value: 100 },
@@ -24,13 +26,14 @@ const Percentage = () => {
             <div className="bg-white p-6 rounded-lg shadow-lg w-full">
                 <div className="flex items-center space-x-2">
                     <h2 className="text-lg font-bold ">Percentage of Employees</h2>
-                    <div className="top-2 right-2 bg-[#82ca9d] text-white text-sm px-3 py-1 rounded-full">
+                    <div className="top-2 right-2 bg-[#58C056] text-white text-sm px-3 py-1 rounded-full">
                         0,1 %
                     </div>
                 </div>
-                <div>
+                <button className='flex space-x-1'>
                     <p>Cholesterol</p>
-                </div>
+                    <FaSortDown />
+                </button>
                 {isClient && (
                     <PieChart width={300} height={188}>
                         <Pie
@@ -40,7 +43,7 @@ const Percentage = () => {
                             cy={90}
                             innerRadius={55}
                             outerRadius={70}
-                            fill="#82ca9d"
+                            fill="#58C056"
                         >
                             <Label
                                 value="50%"
@@ -54,7 +57,7 @@ const Percentage = () => {
                         </Pie>
                     </PieChart>
                 )}
-                <div className="flex space-x-2">
+                <div className="flex space-x-1">
                     <p className='font-bold'>340/550</p>
                     <p>Employees with High Cholesterol</p>
                 </div>
@@ -64,9 +67,10 @@ const Percentage = () => {
                 <div className="flex items-center space-x-2">
                     <h2 className="text-lg font-bold ">Employee Activity Percentage</h2>
                 </div>
-                <div>
+                <button className='flex space-x-1'>
                     <p>HMPM</p>
-                </div>
+                    <FaSortDown />
+                </button>
                 {isClient && (
                     <PieChart width={300} height={188}>
                         <Pie
@@ -76,7 +80,7 @@ const Percentage = () => {
                             cy={90}
                             innerRadius={55}
                             outerRadius={70}
-                            fill="#82ca9d"
+                            fill="#58C056"
                         >
                             <Label
                                 value="50%"
