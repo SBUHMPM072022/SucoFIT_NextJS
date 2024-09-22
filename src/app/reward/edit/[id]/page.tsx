@@ -61,7 +61,7 @@ const Reward = [
   }, [id]);
 
   if (!rewardDataState) {
-    return <p>Event not found</p>;
+    return <p>Reward not found</p>;
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -135,4 +135,3 @@ const Reward = [
 // Moved rewards inside the component: Defined the rewards array inside the EditRewardPage component for clarity.
 // Fixed API call in handleSubmit: The editReward function was inlined inside handleSubmit.
 // Corrected conditional rendering: Added a check to display a message if rewardDataState is undefined.
-// This code should now work correctly, allowing you to edit a reward and save changes via an API call.
