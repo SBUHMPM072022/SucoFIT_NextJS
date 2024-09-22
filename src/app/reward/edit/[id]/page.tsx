@@ -12,9 +12,9 @@ interface Reward {
   prize: string;
 }
 
-const rewards = [
-    { id: '1', rank: '', desc: 'Fikri Ahsanandi', prize: 'Rp 100.000' },
-    { id: '2', rank: '', desc: 'Fikri Ahsanandi', prize: 'Rp 100.000' },
+const Reward = [
+  { id: '1', rank: '', desc: 'Fikri Ahsanandi', prize: 'Rp 100.000' },
+  { id: '2', rank: '', desc: 'Fikri Ahsanandi', prize: 'Rp 100.000' },
     { id: '3', rank: '', desc: 'Fikri Ahsanandi', prize: 'Rp 100.000' },
     { id: '4', rank: '', desc: 'Fikri Ahsanandi', prize: 'Rp 100.000' },
     { id: '5', rank: '', desc: 'Fikri Ahsanandi', prize: 'Rp 100.000' },
@@ -25,37 +25,36 @@ const rewards = [
     { id: '10', rank: '', desc: 'Fikri Ahsanandi', prize: 'Rp 100.000' },
     { id: '11', rank: '', desc: 'Fikri Ahsanandi', prize: 'Rp 100.000' },
     { id: '12', rank: '', desc: 'Fikri Ahsanandi', prize: 'Rp 100.000' },
-];
+  ];
 
-const [rewardDataState, setEditReward] :any = useState<Reward | undefined>();
-
-async function getEditReward() {
-  try {
-    const response = await axios.get(`http://localhost:4006/api/v1/web/reward/${id}`);
-    setEditReward(response.data.data);
-    console.log(response.data.data);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-useEffect(() => {
-  getEditReward()
- 
-}, []);
-
-export default function EditRewardPage() {
-  const { id } = useParams();
-  const router = useRouter();
-  const [position, setPosition] = useState<[number, number]>([-6.257377, 106.835903]);
-
-  const [rewardDataState, setRewardDataState] :any = useState<Reward | undefined>();
-
+  
+  
+  export default function EditRewardPage() {
+    const { id } = useParams();
+    const router = useRouter();
+    const [position, setPosition] = useState<[number, number]>([-6.257377, 106.835903]);
+    
+    const [rewardDataState, setEditReward] :any = useState<Reward | undefined>();
+    
+    async function getEditReward() {
+      try {
+        const response = await axios.get(`http://localhost:4006/api/v1/web/reward/${id}`);
+        setEditReward(response.data.data);
+        console.log(response.data.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    
+    useEffect(() => {
+      getEditReward()
+      
+    }, []);
   useEffect(() => {
     if (id) {
-      const foundReward = rewards.find((reward) => reward.id === id);
+      const foundReward = Reward.find((reward) => reward.id === id);
       if (foundReward) {
-        setRewardDataState(foundReward);
+        setEditReward(foundReward);
         setPosition([-6.257377, 106.835903]);
       }
     }
@@ -67,7 +66,7 @@ export default function EditRewardPage() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setRewardDataState({ ...rewardDataState, [name]: value });
+    setEditReward({ ...rewardDataState, [name]: value });
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
