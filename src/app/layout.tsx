@@ -21,7 +21,6 @@ export default function RootLayout({
         <Layoutbar>
           {children}
         </Layoutbar>
-
       </body>
     </html>
   );

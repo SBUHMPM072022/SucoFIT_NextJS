@@ -7,6 +7,7 @@ import Link from "next/link";
 
 import { CgSoftwareDownload } from "react-icons/cg";
 import { CgSoftwareUpload } from "react-icons/cg";
+import axios from "axios";
 
 interface Event {
   id: string;
@@ -148,44 +149,69 @@ const userData = [
 const DetailEvent = () => {
   const { id } = useParams();
 
-  const [event, setEvent] = useState<Event | undefined>();
+  const [eventDetail, setEventDetail] : any = useState([]);
+
+async function getEventDetail(){
+  try{
+    const response = await axios.get(`http://localhost:4006/api/v1/web/event/${id}`);
+    setEventDetail(response.data.data);
+    console.log(response.data.data);
+  }catch (error){
+    console.log(error)
+  }
+}
 
   useEffect(() => {
     if (id) {
-      const foundEvent = eventData.find((event) => event.id === id);
-      setEvent(foundEvent);
+      getEventDetail()
+      console.log(id)
     }
   }, [id]);
 
-  if (!event) {
+  if (!eventDetail) {
     return <p>Event not found</p>;
   }
   
   const router = useRouter();
+  const [eventParticipant, setParticipantData] : any = useState([]); 
+
+  async function getParticipant() {
+    try {
+      const response = await axios.get(`http://localhost:4006/api/v1/web/participant?event_id=${id}`);
+      setParticipantData(response.data.data);
+      console.log(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    getParticipant()
+  }, []);
 
   return (
-    <div className="p-10">
+    <div className="p-10 w-[120%]">
       <div>
         <div className="flex">
           <img src="/badminton.jpg" alt="event image" className="mb-2 w-[50vh] h-[50vh] "/>
           <div className="flex-col ml-10">
-            <h1 className="text-xl font-bold uppercase">{event.eventName}</h1>
-            <p>{event.eventDetail}</p>
-            <p className="mt-3">Acara akan dilaksanakan pada {event.eventDate} di {event.loc}.</p>
-            <p className="mt-3">Pendaftaran dibuka pada {event.regisStart} - {event.regisEnd}.</p>
+            <h1 className="text-xl font-bold uppercase">{eventDetail.event_name}</h1>
+            <p>{eventDetail.event_description}</p>
+            <p className="mt-3">Acara akan dilaksanakan pada {eventDetail.event_date} di {eventDetail.location}.</p>
+            <p className="mt-3">Pendaftaran dibuka pada {eventDetail.registration_date}.</p>
           </div>
         </div>
       </div>
       <div className="flex justify-between mt-10 mb-2 items-end">
-        <h1 className="font-semibold uppercase"> List Partisipan</h1>
+        <h1 className="font-semibold uppercase">Participants</h1>
         <div className="flex justify-end">
           <button 
             className="px-2 py-1 text-sm bg-[#027FB9] text-white font-semibold rounded-md flex items-center hover:bg-[#036999]">
             <CgSoftwareUpload className="mr-1 h-5 w-5"/>
-            Export Participant Data
+            Export Participants Data
           </button>
         </div>
-        </div>
+      </div>
       <div>
         <div className="w-full max-h-[55vh] bg-white p-6 border rounded-xl shadow-sm overflow-x-auto overflow-y-auto">
           <table className="min-w-full divide-y divide-gray-200">
@@ -215,24 +241,24 @@ const DetailEvent = () => {
              </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {userData.map((value, i) => (
+              {eventParticipant.map((value: any, i: number) => (
                 <tr key={i}>
                   <td className="px-3 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">{i + 1}</div>
                 </td>
                 <td className="px-2 py-4 whitespace-nowrap">
                   <div className="text-sm font-medium text-gray-900">
-                    {value.name}
+                    {value.username}
                   </div>
                 </td>
                 <td className="px-6 py-4 text-center whitespace-nowrap">
                   <div className="text-sm font-medium text-gray-900">
-                    {value.division}
+                    {value.division_name}
                   </div>
                 </td>
                 <td className="px-6 py-4 text-center whitespace-nowrap">
                   <div className="text-sm font-medium text-gray-900">
-                    {value.joinDate}
+                    {value.join_date}
                   </div>
                 </td>
                 <td className="px-6 py-4 text-center whitespace-nowrap">
@@ -242,7 +268,7 @@ const DetailEvent = () => {
                 </td>
                 <td className="px-6 py-4 text-center whitespace-nowrap">
                   <div className="text-sm font-medium text-gray-900">
-                    {value.loc}
+                    {/*value location valid/nonvalid*/}
                   </div>
                 </td>
                 <td>

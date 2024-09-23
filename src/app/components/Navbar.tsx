@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 import axios from "axios";
 
@@ -14,39 +14,57 @@ import { CiMedicalClipboard } from "react-icons/ci";
 
 const Navbar = () => {
   const router = useRouter();
+  const pathname = usePathname();
   const [activeButton, setActiveButton] = useState('dashboard');
 
   const [logout, setLogout]: any = useState([]);
 
-  const handleDashboard = () => {
-    setActiveButton('dashboard');
-    router.push('/dashboard');
-  };
+  // const handleDashboard = () => {
+  //   setActiveButton('dashboard');
+  //   router.push('/dashboard');
+  // };
 
-  const handleEvents = () => {
-    setActiveButton('events');
-    router.push('/events');
-  };
+  // const handleEvents = () => {
+  //   setActiveButton('events');
+  //   router.push('/events');
+  // };
 
-  const handleDoctor = () => {
-    setActiveButton('doctor');
-    router.push('/doctor');
-  };
+  // const handleDoctor = () => {
+  //   setActiveButton('doctor');
+  //   router.push('/doctor');
+  // };
 
-  const handleReward = () => {
-    setActiveButton('reward');
-    router.push('/reward');
-  };
+  // const handleReward = () => {
+  //   setActiveButton('reward');
+  //   router.push('/reward');
+  // };
 
-  const handleDatabase = () => {
-    setActiveButton('database');
-    router.push('/database');
-  };
+  // const handleDatabase = () => {
+  //   setActiveButton('database');
+  //   router.push('/employee');
+  // };
 
-  const handleSetting = () => {
-    setActiveButton('setting');
-    router.push('/setting');
-  };
+  // const handleSetting = () => {
+  //   setActiveButton('setting');
+  //   router.push('/setting');
+  // };
+
+  useEffect(() => {
+    // Set active button based on the current path
+    if (pathname.includes('dashboard')) {
+      setActiveButton('dashboard');
+    } else if (pathname.includes('events')) {
+      setActiveButton('events');
+    } else if (pathname.includes('doctor')) {
+      setActiveButton('doctor');
+    } else if (pathname.includes('reward')) {
+      setActiveButton('reward');
+    } else if (pathname.includes('employee')) {
+      setActiveButton('database');
+    } else if (pathname.includes('setting')) {
+      setActiveButton('setting');
+    }
+  }, [pathname]);
 
   // async function getLogout() {
   //   try {
@@ -76,34 +94,36 @@ const Navbar = () => {
   return (
     <div className='h-screen flex'>
 
-      <div className="flex flex-col w-[100%] bg-[#FFFFFF] p-4">
+      <div className="flex flex-col w-[120%] bg-[#FFFFFF] p-4">
         <div className="flex items-center mb-8">
           <img src="Logo_SucoFIT.png" alt="Logo" className="h-8 w-8 mr-2" />
           <span className="text-xl font-bold">SucoFIT</span>
         </div>
         <nav className="flex-grow">
           <button
-            className={`flex items-center p-2 rounded w-40 ${activeButton === 'dashboard'
+            className={`flex items-center p-2 mb-1 rounded w-40 ${activeButton === 'dashboard'
               ? 'bg-[#027FB9] text-white'
               : 'text-gray-900 hover:bg-[#027FB9] hover:text-white'
               }`}
-            onClick={handleDashboard}>
+              onClick={() => router.push('/dashboard')}>
             <span className="icons"><GoHome /></span>
             <span className="ml-2">Dashboard</span>
           </button>
-          <button className={`flex items-center p-2 rounded w-40 ${activeButton === 'events'
-            ? 'bg-[#027FB9] text-white'
-            : 'text-gray-900 hover:bg-[#027FB9] hover:text-white'
-            }`}
-            onClick={handleEvents}>
+          <button
+            className={`flex items-center p-2 mb-1 rounded w-40 ${activeButton === 'events'
+                ? 'bg-[#027FB9] text-white'
+                : 'text-gray-900 hover:bg-[#027FB9] hover:text-white'
+              }`}
+              onClick={() => router.push('/events')}>
             <span className="icons"><BsCalendar4Event /></span>
             <span className="ml-2">Events</span>
           </button>
-          <button className={`flex items-center p-2 rounded w-40 ${activeButton === 'reward'
-            ? 'bg-[#027FB9] text-white'
-            : 'text-gray-900 hover:bg-[#027FB9] hover:text-white'
-            }`}
-            onClick={handleReward}>
+          <button
+            className={`flex items-center p-2 mb-1 rounded w-40 ${activeButton === 'reward'
+                ? 'bg-[#027FB9] text-white'
+                : 'text-gray-900 hover:bg-[#027FB9] hover:text-white'
+              }`}
+              onClick={() => router.push('/reward')}>
             <span className="icons"><PiMedalMilitaryLight /></span>
             <span className="ml-2">Reward</span>
           </button>
@@ -111,7 +131,7 @@ const Navbar = () => {
             ? 'bg-[#027FB9] text-white'
             : 'text-gray-900 hover:bg-[#027FB9] hover:text-white'
             }`}
-            onClick={handleDoctor}>
+            onClick={() => router.push('/doctor')}>
             <span className="icons"><CiMedicalClipboard /></span>
             <span className="ml-2">Doctor</span>
           </button>
@@ -119,7 +139,7 @@ const Navbar = () => {
             ? 'bg-[#027FB9] text-white'
             : 'text-gray-900 hover:bg-[#027FB9] hover:text-white'
             }`}
-            onClick={handleDatabase}>
+            onClick={() => router.push('/employee')}>
             <span className="icons"><GoDatabase /></span>
             <span className="ml-2">Database</span>
           </button>
@@ -127,7 +147,7 @@ const Navbar = () => {
             ? 'bg-[#027FB9] text-white'
             : 'text-gray-900 hover:bg-[#027FB9] hover:text-white'
             }`}
-            onClick={handleSetting}>
+            onClick={() => router.push('/setting')}>
             <span className="icons"><IoSettingsOutline /></span>
             <span className="ml-2">Setting</span>
           </button>

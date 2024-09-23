@@ -7,7 +7,6 @@ import axios from "axios";
 
 // const leaderboardData = [
 //   { rank: '', name: '', username: '', points: '', image: '' },
-  
 // ];
 
 const Leaderboard = () => {

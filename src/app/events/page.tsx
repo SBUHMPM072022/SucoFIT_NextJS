@@ -140,7 +140,7 @@ export default function listEvent() {
   }, []);
   
   return (
-    <div className="flex flex-col p-10 min-h-screen">
+    <div className="flex flex-col p-6 min-h-screen">
       <div className="flex justify-between items-center">
       <h1 className="font-semibold mb-2 uppercase">Events</h1>
       <div>
@@ -184,7 +184,7 @@ export default function listEvent() {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {eventData.map((value: any, i: number) => (
-              <tr key={i}>
+              <tr key={i} className="text-center">
                 <td className="px-2 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">{i + 1}</div>
                 </td>

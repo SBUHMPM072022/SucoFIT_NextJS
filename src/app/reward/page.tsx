@@ -5,8 +5,16 @@ import { useRouter } from 'next/navigation';
 import { FaPlus } from "react-icons/fa6";
 import { CgPen, CgTrash } from "react-icons/cg";
 import axios from "axios";
+import Link from "next/link";
 
 import Navbar from '../components/Navbar';
+
+// interface Event {
+//     id: string;
+//     rank: string;
+//     desc: string;
+//     prize: string;
+// }
 
 const rewards = [
     { id: 1, rank: '', desc: 'Fikri Ahsanandi', prize: 'Rp 100.000' },
@@ -21,7 +29,7 @@ export default function Reward() {
     const [start_rank, setStartRank] = useState('');
     const [end_rank, setEndRank] = useState('');
 
-    const [reward, setRewardData] : any = useState([]); 
+    const [reward, setRewardData]: any = useState([]);
 
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
@@ -35,23 +43,23 @@ export default function Reward() {
 
     const handleSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-    
+
         const position = [];
         for (let i = parseInt(start_rank); i <= parseInt(end_rank); i++) {
             position.push(i);
         }
-    
+
         const newRewardData = {
             start_date,
             end_date,
             start_rank,
             end_rank
         };
-    
+
         console.log('Start Date:', start_date);
         console.log('End Date:', end_date);
         console.log('Position:', position);
-    
+
         axios.post('http://localhost:4006/api/v1/web/reward', newRewardData)
             .then(function (response) {
                 getReward();
@@ -60,56 +68,61 @@ export default function Reward() {
             .catch(function (error) {
                 console.log(error);
             });
-    
+
         closeModal();
     };
-    
+
     async function getReward() {
         try {
-          const response = await axios.get('http://localhost:4006/api/v1/web/reward');
-          setRewardData(response.data.data);
-          console.log(response.data.data);
+            const response = await axios.get('http://localhost:4006/api/v1/web/reward');
+            setRewardData(response.data.data);
+            console.log(response.data.data);
         } catch (error) {
-          console.error(error);
+            console.error(error);
         }
-      }
-    
-      useEffect(() => {
+    }
+
+    useEffect(() => {
         getReward()
-      }, []);
+    }, []);
 
     return (
-
-        <div className="flex h-screen">
+        <div className="flex h-screen w-[250%]">
 
             <div className="flex-grow p-6">
                 <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-xl font-bold">Reward</h2>
+                    <h2 className="font-semibold mb-2 uppercase">Reward</h2>
                     <button onClick={openModal}
                         className="flex items-center bg-[#027FB9] text-white py-1 px-2 rounded-md hover:bg-[#006695]">
                         <FaPlus className="mr-1" />Create reward
                     </button>
                 </div>
 
-                <div className="overflow-x-auto overflow-y-auto max-h-80">
-                    <div className="min-w-full bg-white border rounded-md p-6">
-                        <table className="min-w-full bg-white border">
-                            <thead>
+                <div className="">
+                    <div className="w-full max-h-[80vh] bg-white p-6 border rounded-xl shadow-sm overflow-x-auto overflow-y-auto">
+                        <table className="min-w-full divide-y divide-gray-200">
+                            <thead className="bg-gray-50">
                                 <tr>
-                                    <th scope="col" className="py-2 px-4 border-b text-left text-gray-500">Rank</th>
-                                    <th scope="col" className="py-2 px-4 border-b text-gray-500">Description</th>
-                                    <th scope="col" className="py-2 px-4 border-b text-gray-500">Prize</th>
-                                    <th scope="col" className="py-2 px-4 border-b text-gray-500">Actions</th>
+                                    <th scope="col" className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
+                                    <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                                    <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Prize</th>
+                                    <th scope="col" className="px-2 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody className="bg-white divide-y divide-gray-200">
                                 {reward.map((value: any, i: number) => (
-                                    <tr key={i}>
-                                        <td className="py-2 px-4 border-b">{value.position}</td>
-                                        <td className="py-2 px-4 border-b text-center">{value.description}</td>
-                                        <td className="py-2 px-4 border-b text-center">{value.prize}</td>
-                                        <td className="py-2 px-4 border-b space-x-2 text-center">
-                                            <button className="bg-[#027FB9] text-white px-2 py-1.5 rounded-md hover:bg-[#006695]"><CgPen /></button>
+                                    <tr key={i} >
+                                        <td className="px-2 py-3 whitespace-nowrap text-sm text-gray-900">{value.position}</td>
+                                        <td className="px-6 py-3 whitespace-nowrap text-center text-sm text-gray-900">{value.description}</td>
+                                        <td className="px-6 py-3 whitespace-nowrap text-center text-sm text-gray-900">{value.prize}</td>
+                                        <td className="px-2 py-3 whitespace-nowrap space-x-2 text-center text-sm">
+                                            {/* <button className="bg-[#027FB9] text-white px-2 py-1.5 rounded-md hover:bg-[#006695]"><CgPen /></button>
+                                            <button className="bg-[#FF7F3E] text-white px-2 py-1.5 rounded-md hover:bg-[#FF5600]"><CgTrash /></button> */}
+                                            <Link href={`/reward/edit/${value.id}`} legacyBehavior>
+                                                <a>
+                                                    <button className="bg-[#027FB9] text-white px-2 py-1.5 rounded-md hover:bg-[#006695]"><CgPen /></button>
+                                                </a>
+                                            </Link>
                                             <button className="bg-[#FF7F3E] text-white px-2 py-1.5 rounded-md hover:bg-[#FF5600]"><CgTrash /></button>
                                         </td>
                                     </tr>
@@ -168,7 +181,7 @@ export default function Reward() {
                                 <div className="flex justify-end space-x-2">
                                     <button
                                         type="submit"
-                                        onClick={(e: any)=>handleSubmit(e)}
+                                        onClick={(e: any) => handleSubmit(e)}
                                         className="bg-[#027FB9] w-16 text-white py-1 px-3 rounded-md hover:bg-[#006695]"
                                     >
                                         Save
