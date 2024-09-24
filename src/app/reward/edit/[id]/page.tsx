@@ -76,9 +76,7 @@ const Reward = [
 
   async function editReward() {
     try {
-     const res = await axios.put(`http://localhost:4006/api/v1/web/reward/${id}`,
-       rewardDataState
-     );
+     const res = await axios.put(`http://localhost:4006/api/v1/web/reward/${id}`, rewardDataState);
      console.log(editReward);
      
    } catch (error) {
