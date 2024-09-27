@@ -82,6 +82,17 @@ export default function Reward() {
         }
     }
 
+    const handleDelete = async (id: string) => {
+        if (confirm("Apakah Anda yakin ingin menghapus reward ini?")) {
+            try {
+                await axios.delete(`http://localhost:4006/api/v1/web/reward/${id}`);
+                getReward(); 
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    };
+
     useEffect(() => {
         getReward()
     }, []);
@@ -104,8 +115,8 @@ export default function Reward() {
                             <thead className="bg-gray-50">
                                 <tr>
                                     <th scope="col" className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
-                                    <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                                    <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Prize</th>
+                                    <th scope="col" className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                                    <th scope="col" className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Prize</th>
                                     <th scope="col" className="px-2 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                                 </tr>
                             </thead>
@@ -113,8 +124,8 @@ export default function Reward() {
                                 {reward.map((value: any, i: number) => (
                                     <tr key={i} >
                                         <td className="px-2 py-3 whitespace-nowrap text-sm text-gray-900">{value.position}</td>
-                                        <td className="px-6 py-3 whitespace-nowrap text-center text-sm text-gray-900">{value.description}</td>
-                                        <td className="px-6 py-3 whitespace-nowrap text-center text-sm text-gray-900">{value.prize}</td>
+                                        <td className="px-4 py-3 whitespace-nowrap text-center text-sm text-gray-900">{value.description}</td>
+                                        <td className="px-4 py-3 whitespace-nowrap text-center text-sm text-gray-900">{value.prize}</td>
                                         <td className="px-2 py-3 whitespace-nowrap space-x-2 text-center text-sm">
                                             {/* <button className="bg-[#027FB9] text-white px-2 py-1.5 rounded-md hover:bg-[#006695]"><CgPen /></button>
                                             <button className="bg-[#FF7F3E] text-white px-2 py-1.5 rounded-md hover:bg-[#FF5600]"><CgTrash /></button> */}
@@ -123,7 +134,8 @@ export default function Reward() {
                                                     <button className="bg-[#027FB9] text-white px-2 py-1.5 rounded-md hover:bg-[#006695]"><CgPen /></button>
                                                 </a>
                                             </Link>
-                                            <button className="bg-[#FF7F3E] text-white px-2 py-1.5 rounded-md hover:bg-[#FF5600]"><CgTrash /></button>
+                                            <button onClick={() => handleDelete(value.id)}
+                                            className="bg-[#FF7F3E] text-white px-2 py-1.5 rounded-md hover:bg-[#FF5600]"><CgTrash /></button>
                                         </td>
                                     </tr>
                                 ))}

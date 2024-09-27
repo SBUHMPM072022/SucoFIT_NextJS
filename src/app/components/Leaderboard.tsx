@@ -24,9 +24,7 @@ const Leaderboard = () => {
   }  
 
   useEffect(() => {
-
     getLeaderboard()
-
   }, []);
 
   return (
@@ -39,7 +37,7 @@ const Leaderboard = () => {
             <div className="flex items-center">
               <span className="text-lg font-bold text-gray-500 w-8">{String(user.id).padStart(2, '0')}</span>
               <img
-                src={user.image}
+                src={`${process.env.NEXT_PUBLIC_URL}/${user.profile_picture}`}
                 alt={user.fullname}
                 width={40}
                 height={40}

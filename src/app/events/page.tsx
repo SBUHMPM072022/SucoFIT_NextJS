@@ -135,6 +135,17 @@ export default function listEvent() {
     }
   }
 
+  const handleDelete = async (id: string) => {
+    if (confirm("Apakah Anda yakin ingin menghapus event ini?")) {
+        try {
+            await axios.delete(`http://localhost:4006/api/v1/web/event/${id}`);
+            getUser(); 
+        } catch (error) {
+            console.error(error);
+        }
+    }
+};
+
   useEffect(() => {
     getUser()
   }, []);
@@ -228,7 +239,8 @@ export default function listEvent() {
                     </a>
                   </Link>
 
-                  <button className="px-2 py-1 ml-1 bg-[#FF7F3E] rounded-md text-xs text-white flex items-center hover:bg-[#FF5600]">
+                  <button onClick={() => handleDelete(value.id)}
+                  className="px-2 py-1 ml-1 bg-[#FF7F3E] rounded-md text-xs text-white flex items-center hover:bg-[#FF5600]">
                   <CgTrash className="w-4 h-4"/> {/*delete*/}
                   </button>
 

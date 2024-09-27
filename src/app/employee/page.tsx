@@ -72,13 +72,34 @@ const employeeData = [
     },
   ];
 
+  const Badge = ({ label }: { label: string }) => {
+    const getBadgeColor = () => {
+      switch (label) {
+        case 'yoga':
+          return 'bg-green-500 text-white';
+        case 'senam':
+          return 'bg-blue-500 text-white';
+        case 'berenang':
+          return 'bg-purple-500 text-white';
+        default:
+          return 'bg-gray-500 text-white';
+      }
+    };
+  
+    return (
+      <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getBadgeColor()}`}>
+        {label}
+      </span>
+    );
+  };
+
   export default function ListEmployee() {
     const router = useRouter();
     const handleImportDataClick = () => {
       router.push('/employee/import');
     }
     return (
-      <div className="flex flex-col p-6 min-h-screen w-[80%]">
+      <div className="flex flex-col p-6 min-h-screen w-[100%]">
         <div className="flex justify-between items-center">
           <h1 className="font-semibold mb-2 uppercase">Employees</h1>
           <div className="flex-w-full justify-start mb-2">
@@ -191,6 +212,7 @@ const employeeData = [
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-gray-900">
                       {/* {value.rekomendasi} */}
+                      <Badge label={value.rekomendasi}/>
                     </div>
                   </td>
                 </tr>

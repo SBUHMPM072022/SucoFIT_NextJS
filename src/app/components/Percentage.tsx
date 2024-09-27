@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import React from "react";
-import { PieChart, Pie, Label } from "recharts";
+import { PieChart, Pie, Label, Cell } from "recharts";
 import { FaSortDown } from "react-icons/fa";
-
+import axios from 'axios';
 
 const data01 = [
-    { name: "A1", value: 100 },
-    { name: "A2", value: 100 },
+    { name: "A1", value: 10 },
+    { name: "A2", value: 90 },
 ];
 
 const data02 = [
@@ -14,12 +14,30 @@ const data02 = [
     { name: "A4", value: 100 },
 ];
 
+const COLORS = ['#FF4E4E', '#58C056', '#FFBB28'];
+
 const Percentage = () => {
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
         setIsClient(true);
     }, []);
+
+    const [activity, setActivity]: any = useState([]);
+
+  async function getActivity() {
+    try {
+      const response = await axios.get('http://localhost:4006/api/v1/web/dashboard/active-percentage?division=HMPM');
+      setActivity(response.data.data)
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  }  
+
+  useEffect(() => {
+    getActivity()
+  }, []);
 
     return (
         <div className="space-y-2">
@@ -54,6 +72,9 @@ const Percentage = () => {
                                     fontWeight: "bold",
                                 }}
                             />
+                            {data01.map((entry, index) => (
+                                <Cell key={`cell - ${index}`} fill={COLORS[index % COLORS.length]} />
+                            ))}
                         </Pie>
                     </PieChart>
                 )}
@@ -71,10 +92,11 @@ const Percentage = () => {
                     <p>HMPM</p>
                     <FaSortDown />
                 </button>
-                {isClient && (
+                
+                {isClient && activity.data_chart > 0 && (
                     <PieChart width={300} height={188}>
                         <Pie
-                            data={data02}
+                            data={activity.data_chart}
                             dataKey="value"
                             cx={150}
                             cy={90}
@@ -83,7 +105,7 @@ const Percentage = () => {
                             fill="#58C056"
                         >
                             <Label
-                                value="50%"
+                                value={activity.percentage}
                                 position="center"
                                 fill="#000"
                                 style={{
@@ -91,11 +113,14 @@ const Percentage = () => {
                                     fontWeight: "bold",
                                 }}
                             />
+                            {activity.data_chart.map((entry:any, index:number) => (
+                                <Cell key={`cell - ${index}`} fill={COLORS[index % COLORS.length]} />
+                            ))}
                         </Pie>
                     </PieChart>
                 )}
                 <div className="flex space-x-2">
-                    <p className='font-bold'>48/60</p>
+                    <p className='font-bold'>{activity.active_user} / {activity.active_user + activity.non_active_user}</p>
                     <p>HMPM Employees</p>
                 </div>
             </div>

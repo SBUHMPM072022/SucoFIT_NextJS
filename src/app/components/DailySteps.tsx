@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import React from "react";
-import { PieChart, Pie, Label } from "recharts";
+import { PieChart, Pie, Label, Cell } from "recharts";
 
 const data01 = [
     { name: "A1", value: 25 },
     { name: "A2", value: 75 },
 ];
+
+const COLORS = ['#FF4E4E', '#58C056', '#FFBB28'];
 
 const DailySteps = () => {
     const [isClient, setIsClient] = useState(false);
@@ -39,6 +41,9 @@ const DailySteps = () => {
                                 fontWeight: "bold",
                             }}
                         />
+                        {data01.map((entry, index) => (
+                                <Cell key={`cell - ${index}`} fill={COLORS[index % COLORS.length]} />
+                            ))}
                     </Pie>
                 </PieChart>
             )}

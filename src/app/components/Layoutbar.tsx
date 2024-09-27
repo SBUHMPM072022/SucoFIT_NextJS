@@ -18,7 +18,7 @@ export default function Layoutbar({
       {!isAuthPage && (
         <>
           {/* Navbar on the side (left) */}
-          <div className="sticky">
+          <div className="sticky top-0">
             <Navbar />
           </div>
             <div className="absolute top-0 z-50 w-full">

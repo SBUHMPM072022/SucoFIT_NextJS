@@ -28,7 +28,6 @@ const Reward = [
   ];
 
   
-  
   export default function EditRewardPage() {
     const { id } = useParams();
     const router = useRouter();
